@@ -1,0 +1,23 @@
+{
+  "generated": "2026-10-04",
+  "conformance": {
+    "total": 150,
+    "passing": 150,
+    "checksPerLang": 25,
+    "cases": 22,
+    "buckets": 3,
+    "languages": ["dotnet", "node", "python", "go", "java", "rust"]
+  },
+  "benchmarks": [
+    { "lang": "Node",   "nsPerEval": 931,  "throughput": 1073858 },
+    { "lang": ".NET",   "nsPerEval": 1012, "throughput": 987758 },
+    { "lang": "Go",     "nsPerEval": 3137, "throughput": 318771 },
+    { "lang": "Rust",   "nsPerEval": 4215, "throughput": 237265 },
+    { "lang": "Python", "nsPerEval": 6997, "throughput": 142917 }
+  ],
+  "buckets": [
+    { "vector": "f.s.user-A", "value": 0.250274217889144 },
+    { "vector": "checkout-v2.abc.user-1", "value": 0.5864417850195552 },
+    { "vector": "rollout.s.user-C", "value": 0.5457655356360461 }
+  ]
+}

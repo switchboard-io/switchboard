@@ -1,0 +1,11 @@
+<svg width="188" height="40" viewBox="0 0 188 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- mark -->
+  <rect x="2" y="4" width="32" height="32" rx="7" fill="#161b2b"/>
+  <line x1="12" y1="26" x2="24" y2="14" stroke="#3b4157" stroke-width="3" stroke-linecap="round"/>
+  <circle cx="12" cy="26" r="4.5" fill="#5a6278"/>
+  <circle cx="24" cy="14" r="4.5" fill="#3884ff"/>
+  <!-- wordmark -->
+  <text x="44" y="27" font-family="Segoe UI, system-ui, sans-serif" font-size="20" font-weight="800" letter-spacing="-0.5">
+    <tspan fill="#3884ff">Switch</tspan><tspan fill="#e8eef9">board</tspan>
+  </text>
+</svg>

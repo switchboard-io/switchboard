@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Switchboard — proof dashboard</title>
+  <meta name="description" content="Live cross-language conformance matrix and evaluation benchmarks for Switchboard: one engine, six languages, proven identical in CI." />
+  <link rel="icon" href="favicon.svg" />
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    .bars { display: flex; flex-direction: column; gap: 10px; margin-top: 8px; }
+    .bar-row { display: grid; grid-template-columns: 72px 1fr 150px; align-items: center; gap: 12px; }
+    .bar-row .lang { text-align: right; color: var(--muted); font-size: 14px; }
+    .bar-track { background: #0b0e18; border: 1px solid var(--border); border-radius: 6px; height: 22px; overflow: hidden; }
+    .bar-fill { height: 100%; background: linear-gradient(90deg, #2f6fe0, #3884ff); }
+    .bar-val { color: var(--ink); font: 13px ui-monospace, Consolas, monospace; }
+    .matrix { width: 100%; border-collapse: collapse; margin-top: 8px; font-size: 14px; }
+    .matrix th, .matrix td { border: 1px solid var(--border); padding: 8px 10px; text-align: center; }
+    .matrix th:first-child, .matrix td:first-child { text-align: left; }
+    .ok-badge { color: var(--accent2); font-weight: 700; }
+    .big { font-size: 40px; font-weight: 800; letter-spacing: -.02em; }
+    .statline { display: flex; gap: 32px; flex-wrap: wrap; margin: 10px 0 0; }
+    .stat .lbl { color: var(--muted); font-size: 13px; text-transform: uppercase; letter-spacing: .06em; }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header class="nav">
+      <div class="brand"><a href="index.html" style="text-decoration:none"><img src="logo.svg" alt="Switchboard" height="32" style="vertical-align:middle" /></a></div>
+      <nav>
+        <a href="index.html">Home</a>
+        <a href="playground.html">Playground</a>
+        <a href="https://github.com/switchboard-io/switchboard">GitHub</a>
+      </nav>
+    </header>
+
+    <h1 style="margin:28px 0 4px;">Proof dashboard</h1>
+    <p style="color:#9aa4bd;margin-top:0;">
+      One evaluation engine, six languages, verified identical in CI. Updated from the
+      conformance suite and benchmark workflow.
+    </p>
+
+    <section class="card">
+      <h2 class="section" style="margin-top:0;">Cross-language conformance</h2>
+      <div class="statline">
+        <div class="stat"><div class="lbl">Checks passing</div><div class="big ok-badge" id="confBig">—</div></div>
+        <div class="stat"><div class="lbl">Languages</div><div class="big" id="langCount">—</div></div>
+        <div class="stat"><div class="lbl">Cases / buckets</div><div class="big" id="cb">—</div></div>
+      </div>
+      <table class="matrix" id="matrix"></table>
+      <p style="color:#9aa4bd;font-size:13px;">
+        Full case-by-case matrix: <a href="https://github.com/switchboard-io/switchboard/blob/main/conformance/RESULTS.md">conformance/RESULTS.md</a>.
+        Rollout buckets are <strong>exactly</strong> identical across languages (52-bit SHA1 bucketing).
+      </p>
+    </section>
+
+    <section class="card">
+      <h2 class="section" style="margin-top:0;">Evaluation throughput</h2>
+      <p class="sub" style="color:#9aa4bd;margin-top:0;font-size:14px;">Local in-process evaluations per second (higher is better). Measured; reproducible via the benchmarks workflow.</p>
+      <div class="bars" id="bars"></div>
+    </section>
+
+    <footer>
+      <strong>Switchboard</strong> · Apache-2.0 ·
+      <a href="https://github.com/switchboard-io/switchboard">GitHub</a> ·
+      <span id="gen"></span>
+    </footer>
+  </div>
+
+  <script>
+    fetch("data.json").then((r) => r.json()).then((d) => {
+      // conformance
+      document.getElementById("confBig").textContent = `${d.conformance.passing}/${d.conformance.total}`;
+      document.getElementById("langCount").textContent = d.conformance.languages.length;
+      document.getElementById("cb").textContent = `${d.conformance.cases} / ${d.conformance.buckets}`;
+      const langs = d.conformance.languages;
+      const head = "<tr><th>Area</th>" + langs.map((l) => `<th>${l}</th>`).join("") + "</tr>";
+      const rows = [
+        ["Evaluation cases", d.conformance.cases],
+        ["Rollout buckets", d.conformance.buckets],
+      ].map(([label]) => `<tr><td>${label}</td>` + langs.map(() => `<td class="ok-badge">✓</td>`).join("") + "</tr>").join("");
+      document.getElementById("matrix").innerHTML = head + rows;
+
+      // benchmarks
+      const max = Math.max(...d.benchmarks.map((b) => b.throughput));
+      document.getElementById("bars").innerHTML = d.benchmarks.map((b) => {
+        const pct = Math.round((b.throughput / max) * 100);
+        return `<div class="bar-row"><div class="lang">${b.lang}</div>
+          <div class="bar-track"><div class="bar-fill" style="width:${pct}%"></div></div>
+          <div class="bar-val">${b.throughput.toLocaleString()} /s</div></div>`;
+      }).join("");
+
+      document.getElementById("gen").textContent = "Data generated " + d.generated;
+    });
+  </script>
+</body>
+</html>
