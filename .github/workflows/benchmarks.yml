@@ -1,7 +1,9 @@
 name: Benchmarks
 
 # Runs every ecosystem's evaluation benchmark on CI (where Go and Java toolchains
-# exist) so all six languages produce real, reproducible numbers. Manual + weekly.
+# exist) so all six languages produce real, reproducible numbers. Each job extracts
+# its throughput into an artifact; the aggregate job writes web/bench.json and commits
+# it so the public dashboard's bars stay honest. Manual + weekly.
 
 on:
   workflow_dispatch:
@@ -18,7 +20,10 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/setup-dotnet@v4
         with: { dotnet-version: "8.0.x" }
-      - run: dotnet run -c Release --project packages/dotnet/Switchboard.Bench
+      - run: dotnet run -c Release --project packages/dotnet/Switchboard.Bench | tee out.txt
+      - run: bash scripts/bench_extract.sh ".NET" out.txt
+      - uses: actions/upload-artifact@v4
+        with: { name: bench-dotnet, path: bench-*.json }
 
   node:
     runs-on: ubuntu-latest
@@ -26,7 +31,10 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with: { node-version: "20" }
-      - run: node packages/js/bench/compare.js
+      - run: node packages/js/bench/compare.js | tee out.txt
+      - run: bash scripts/bench_extract.sh "Node" out.txt
+      - uses: actions/upload-artifact@v4
+        with: { name: bench-node, path: bench-*.json }
 
   python:
     runs-on: ubuntu-latest
@@ -35,14 +43,10 @@ jobs:
       - uses: actions/setup-python@v5
         with: { python-version: "3.12" }
       - run: pip install -e packages/python
-      - run: python packages/python/bench/compare.py
-
-  rust:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - uses: dtolnay/rust-toolchain@stable
-      - run: cargo run --release --example compare --manifest-path packages/rust/Cargo.toml
+      - run: python packages/python/bench/compare.py | tee out.txt
+      - run: bash scripts/bench_extract.sh "Python" out.txt
+      - uses: actions/upload-artifact@v4
+        with: { name: bench-python, path: bench-*.json }
 
   go:
     runs-on: ubuntu-latest
@@ -51,4 +55,51 @@ jobs:
       - uses: actions/setup-go@v5
         with: { go-version: "1.22", cache: false }
       - working-directory: packages/go
-        run: go run ./cmd/bench
+        run: go run ./cmd/bench | tee ../../out.txt
+      - run: bash scripts/bench_extract.sh "Go" out.txt
+      - uses: actions/upload-artifact@v4
+        with: { name: bench-go, path: bench-*.json }
+
+  rust:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@stable
+      - run: cargo run --release --example compare --manifest-path packages/rust/Cargo.toml | tee out.txt
+      - run: bash scripts/bench_extract.sh "Rust" out.txt
+      - uses: actions/upload-artifact@v4
+        with: { name: bench-rust, path: bench-*.json }
+
+  aggregate:
+    needs: [dotnet, node, python, go, rust]
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: "3.12" }
+      - uses: actions/download-artifact@v4
+        with: { path: _bench }
+      - name: merge into web/bench.json
+        run: |
+          python - <<'PY'
+          import glob, json
+          rows = [json.load(open(p)) for p in glob.glob("_bench/**/bench-*.json", recursive=True)]
+          rows.sort(key=lambda r: r["throughput"], reverse=True)
+          json.dump(rows, open("web/bench.json", "w"), indent=2)
+          print("web/bench.json:", rows)
+          PY
+      - name: refresh dashboard data and commit
+        if: github.event_name != 'pull_request'
+        run: |
+          python scripts/gen_dashboard_data.py || true
+          git config user.name "switchboard-io"
+          git config user.email "switchboard-io@users.noreply.github.com"
+          git add web/bench.json web/data.json
+          if ! git diff --cached --quiet; then
+            git commit -m "benchmarks: refresh dashboard throughput [skip ci]"
+            git push
+          else
+            echo "no benchmark change"
+          fi

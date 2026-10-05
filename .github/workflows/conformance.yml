@@ -109,15 +109,17 @@ jobs:
           ls -la conformance/results
       - run: python conformance/aggregate.py
       - run: cat conformance/RESULTS.md
-      - name: commit the six-language matrix back to main
+      - name: refresh public dashboard data
+        run: python scripts/gen_dashboard_data.py
+      - name: commit the six-language matrix + dashboard data back to main
         if: github.event_name == 'push' && github.ref == 'refs/heads/main'
         run: |
           git config user.name "switchboard-io"
           git config user.email "switchboard-io@users.noreply.github.com"
-          if ! git diff --quiet -- conformance/RESULTS.md; then
-            git add conformance/RESULTS.md
-            git commit -m "conformance: refresh six-language results matrix [skip ci]"
+          git add conformance/RESULTS.md web/data.json
+          if ! git diff --cached --quiet; then
+            git commit -m "conformance: refresh six-language matrix + dashboard data [skip ci]"
             git push
           else
-            echo "RESULTS.md unchanged"
+            echo "nothing to refresh"
           fi
