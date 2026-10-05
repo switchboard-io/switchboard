@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Switchboard — Playground</title>
+  <meta name="description" content="Evaluate a Switchboard feature flag against a context, right in your browser — using the same engine (and the same deterministic bucketing) as every SDK." />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="wrap">
+    <header class="nav">
+      <div class="brand"><a href="index.html" style="text-decoration:none;color:inherit"><span class="sw">Switch</span>board</a></div>
+      <nav>
+        <a href="index.html">Home</a>
+        <a href="https://github.com/switchboard-io/switchboard">GitHub</a>
+      </nav>
+    </header>
+
+    <h1 style="margin:28px 0 6px;">Playground</h1>
+    <p style="color:#9aa4bd;margin-top:0;">
+      Edit a flag and a context, then evaluate. This runs the <strong>exact same engine</strong>
+      (and the same SHA1 rollout bucketing) as the shipped SDKs — entirely in your browser.
+    </p>
+
+    <div class="pg">
+      <div>
+        <label>Flag config</label>
+        <textarea id="flag">{
+  "key": "checkout-v2",
+  "enabled": true,
+  "variations": ["off", "on"],
+  "offVariation": 0,
+  "targets": [{ "values": ["vip"], "variation": 1 }],
+  "rules": [
+    { "clauses": [{ "attribute": "country", "op": "in", "values": ["US", "CA"] }], "variation": 1 }
+  ],
+  "fallthrough": { "rollout": [{ "variation": 0, "weight": 75000 }, { "variation": 1, "weight": 25000 }] },
+  "salt": "abc"
+}</textarea>
+      </div>
+      <div>
+        <label>Context</label>
+        <textarea id="ctx">{
+  "key": "user-42",
+  "attributes": { "country": "US" }
+}</textarea>
+      </div>
+    </div>
+
+    <div class="run"><button class="btn" id="run">Evaluate</button></div>
+    <div id="out" class="ok"></div>
+
+    <p style="color:#9aa4bd;margin-top:24px;">
+      Try: change <code>country</code> to <code>IN</code> (fallthrough rollout), set the
+      context <code>key</code> to <code>vip</code> (target match), or flip
+      <code>enabled</code> to <code>false</code> (kill switch).
+    </p>
+
+    <footer>
+      <strong>Switchboard</strong> · Apache-2.0 ·
+      <a href="https://github.com/switchboard-io/switchboard">GitHub</a>
+    </footer>
+  </div>
+  <script type="module" src="playground.js"></script>
+</body>
+</html>

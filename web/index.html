@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Switchboard — open-source feature management</title>
+  <meta name="description" content="Open-source, self-hosted feature flags with one identical evaluation engine in six languages, proven byte-for-byte in CI." />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="wrap">
+    <header class="nav">
+      <div class="brand"><span class="sw">Switch</span>board</div>
+      <nav>
+        <a href="#why">Why</a>
+        <a href="playground.html">Playground</a>
+        <a href="https://github.com/switchboard-io/switchboard">GitHub</a>
+      </nav>
+    </header>
+
+    <section class="hero">
+      <h1>Feature flags. One engine.<br />Six languages. Proven identical.</h1>
+      <p>
+        Open-source, self-hosted feature management. Targeting, progressive rollouts,
+        kill switches, and experimentation — evaluated locally in-process, with no
+        vendor lock-in.
+      </p>
+      <div class="cta">
+        <a class="btn" href="playground.html">Try the playground</a>
+        <a class="btn ghost" href="https://github.com/switchboard-io/switchboard">Self-host on GitHub</a>
+      </div>
+      <div class="badges">
+        <img alt="Tests" src="https://github.com/switchboard-io/switchboard/actions/workflows/tests.yml/badge.svg" />
+        <img alt="Conformance" src="https://github.com/switchboard-io/switchboard/actions/workflows/conformance.yml/badge.svg" />
+        <img alt="License" src="https://img.shields.io/badge/license-Apache--2.0-blue" />
+      </div>
+    </section>
+
+    <section id="why">
+      <div class="grid">
+        <div class="card"><h3>Proven cross-language</h3><p>.NET, JS, Python, Go, Java, and Rust implement one spec. A shared corpus runs through all six in CI — currently 150/150 checks passing, including exact rollout-bucket identity.</p></div>
+        <div class="card"><h3>No lock-in</h3><p>Portable JSON schema, OpenFeature providers everywhere, and full self-hosting. Your config lives in your repo; your data stays on your infra.</p></div>
+        <div class="card"><h3>Local evaluation</h3><p>SDKs evaluate in-process at 100k–1M evals/sec. The server streams updates; an outage never blocks your app.</p></div>
+      </div>
+    </section>
+
+    <h2 class="section">Install</h2>
+    <pre>dotnet add package Switchboard.Sdk
+npm install @switchboard/sdk
+pip install switchboard-sdk
+go get github.com/switchboard-io/switchboard-go
+cargo add switchboard-sdk</pre>
+
+    <h2 class="section">Evaluate a flag (same shape everywhere)</h2>
+    <pre>import { SwitchboardClient } from "@switchboard/sdk";
+
+const client = SwitchboardClient.fromJson(snapshot);
+const on = client.getBool("checkout-v2", {
+  key: "user-42",
+  attributes: { country: "US" }
+});</pre>
+
+    <h2 class="section">Run the server</h2>
+    <pre>docker compose up --build
+# open http://localhost:8080  — Admin UI + REST + live updates</pre>
+
+    <footer>
+      <strong>Switchboard</strong> · Apache-2.0 ·
+      <a href="https://github.com/switchboard-io/switchboard">GitHub</a> ·
+      <a href="https://github.com/switchboard-io/switchboard/blob/main/conformance/RESULTS.md">Conformance matrix</a> ·
+      <a href="https://github.com/switchboard-io/switchboard/blob/main/docs/BENCHMARKS.md">Benchmarks</a>
+    </footer>
+  </div>
+</body>
+</html>
