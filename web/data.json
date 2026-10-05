@@ -1,8 +1,8 @@
 {
   "generated": "2026-10-05",
   "conformance": {
-    "total": 150,
-    "passing": 150,
+    "total": 175,
+    "passing": 175,
     "checksPerLang": 25,
     "cases": 22,
     "buckets": 3,
@@ -12,6 +12,7 @@
       "java",
       "node",
       "python",
+      "ruby",
       "rust"
     ]
   },
