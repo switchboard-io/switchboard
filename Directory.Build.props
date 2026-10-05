@@ -1,0 +1,42 @@
+<Project>
+
+  <!-- Shared package metadata for all Switchboard NuGet packages.
+       These placeholder 0.0.1 packages exist to RESERVE the package IDs on NuGet.org.
+       Replace the real implementation and bump versions when ready to ship. -->
+  <PropertyGroup>
+    <Authors>Switchboard</Authors>
+    <Company>Switchboard</Company>
+    <Product>Switchboard</Product>
+    <Copyright>Copyright (c) Switchboard</Copyright>
+    <Version>0.0.1</Version>
+
+    <PackageProjectUrl>https://switchboard.co</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/switchboard-io/switchboard</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <PackageIcon>icon.png</PackageIcon>
+    <PackageTags>feature-flags;feature-management;openfeature;experimentation;toggles;rollout</PackageTags>
+
+    <!-- Quality / reproducibility -->
+    <Deterministic>true</Deterministic>
+    <ContinuousIntegrationBuild Condition="'$(CI)' == 'true'">true</ContinuousIntegrationBuild>
+    <IncludeSymbols>true</IncludeSymbols>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+    <EmbedUntrackedSources>true</EmbedUntrackedSources>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <LangVersion>latest</LangVersion>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    <!-- Suppress missing-XML-doc noise on placeholder types -->
+    <NoWarn>$(NoWarn);CS1591</NoWarn>
+  </PropertyGroup>
+
+  <!-- Pack the shared icon and each project's own README.md into every package -->
+  <ItemGroup>
+    <None Include="$(MSBuildThisFileDirectory)assets\icon.png" Pack="true" PackagePath="\" Visible="false" />
+    <None Include="README.md" Pack="true" PackagePath="\" Condition="Exists('README.md')" />
+  </ItemGroup>
+
+</Project>

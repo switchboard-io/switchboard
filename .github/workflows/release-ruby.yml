@@ -1,0 +1,35 @@
+name: Release Ruby (RubyGems)
+
+# Publishes switchboard-sdk and switchboard-openfeature gems.
+# Trigger: push a tag like `ruby-v0.0.1`.
+# Requires RUBYGEMS_API_KEY secret.
+
+on:
+  push:
+    tags: ["ruby-v*"]
+
+permissions:
+  contents: read
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        include:
+          - dir: ruby
+            gemspec: switchboard-sdk.gemspec
+          - dir: ruby-openfeature
+            gemspec: switchboard-openfeature.gemspec
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: "3.2"
+      - name: Build & push gem
+        working-directory: sdk/${{ matrix.dir }}
+        env:
+          GEM_HOST_API_KEY: ${{ secrets.RUBYGEMS_API_KEY }}
+        run: |
+          gem build ${{ matrix.gemspec }}
+          gem push *.gem

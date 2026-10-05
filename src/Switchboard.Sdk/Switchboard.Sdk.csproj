@@ -1,0 +1,11 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <PackageId>Switchboard.Sdk</PackageId>
+    <TargetFrameworks>net8.0;netstandard2.0</TargetFrameworks>
+    <Title>Switchboard SDK</Title>
+    <Description>Local-evaluation feature-flag SDK for .NET. Real-time streaming updates, offline-capable, and OpenFeature-compatible. Placeholder release reserving the package ID.</Description>
+    <RootNamespace>Switchboard</RootNamespace>
+  </PropertyGroup>
+
+</Project>

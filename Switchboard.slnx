@@ -1,0 +1,8 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/Switchboard.Cli/Switchboard.Cli.csproj" />
+    <Project Path="src/Switchboard.OpenFeature/Switchboard.OpenFeature.csproj" />
+    <Project Path="src/Switchboard.Sdk/Switchboard.Sdk.csproj" />
+    <Project Path="src/Switchboard/Switchboard.csproj" />
+  </Folder>
+</Solution>

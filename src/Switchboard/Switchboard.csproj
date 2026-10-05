@@ -1,0 +1,17 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <!-- Umbrella / friendly package. Reserves the bare "Switchboard" ID and
+       pulls in Switchboard.Sdk so `dotnet add package Switchboard` just works. -->
+  <PropertyGroup>
+    <PackageId>Switchboard</PackageId>
+    <TargetFrameworks>net8.0;netstandard2.0</TargetFrameworks>
+    <Title>Switchboard</Title>
+    <Description>Switchboard feature management for .NET — the friendly umbrella package that references the Switchboard SDK. Placeholder release reserving the package ID.</Description>
+    <RootNamespace>Switchboard.Meta</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Switchboard.Sdk\Switchboard.Sdk.csproj" />
+  </ItemGroup>
+
+</Project>

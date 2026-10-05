@@ -1,0 +1,17 @@
+# frozen_string_literal: true
+
+# switchboard-openfeature — placeholder release (0.0.1).
+# Reserves the gem name on RubyGems while the full OpenFeature provider is built.
+# Docs: https://switchboard.co  •  Source: https://github.com/switchboard-io/switchboard
+module Switchboard
+  module OpenFeature
+    VERSION = "0.0.1"
+    NAME = "Switchboard"
+    PLACEHOLDER = true
+
+    # Returns a short description of the provider.
+    def self.about
+      "switchboard-openfeature (placeholder) — OpenFeature provider for Ruby. See https://switchboard.co"
+    end
+  end
+end

@@ -1,0 +1,25 @@
+name: Release Rust (crates.io)
+
+# Publishes switchboard-sdk and switchboard-openfeature crates.
+# Trigger: push a tag like `rust-v0.0.1`.
+# Requires CARGO_REGISTRY_TOKEN secret.
+
+on:
+  push:
+    tags: ["rust-v*"]
+
+permissions:
+  contents: read
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    strategy:
+      max-parallel: 1
+      matrix:
+        pkg: [rust, rust-openfeature]
+    steps:
+      - uses: actions/checkout@v4
+      - name: Publish crate
+        working-directory: sdk/${{ matrix.pkg }}
+        run: cargo publish --token "${{ secrets.CARGO_REGISTRY_TOKEN }}" --allow-dirty

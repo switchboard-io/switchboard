@@ -1,0 +1,38 @@
+{
+  "name": "@switchboard/sdk",
+  "version": "0.0.1",
+  "description": "Local-evaluation feature-flag SDK for JavaScript/TypeScript. Real-time, offline-capable, OpenFeature-compatible. Placeholder release reserving the package name.",
+  "keywords": [
+    "feature-flags",
+    "feature-management",
+    "openfeature",
+    "experimentation",
+    "toggles",
+    "rollout"
+  ],
+  "homepage": "https://switchboard.co",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/switchboard-io/switchboard.git",
+    "directory": "sdk/js"
+  },
+  "bugs": {
+    "url": "https://github.com/switchboard-io/switchboard/issues"
+  },
+  "license": "Apache-2.0",
+  "author": "Switchboard",
+  "type": "module",
+  "main": "index.js",
+  "types": "index.d.ts",
+  "files": [
+    "index.js",
+    "index.d.ts",
+    "README.md"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}

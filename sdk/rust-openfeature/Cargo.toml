@@ -1,0 +1,16 @@
+[package]
+name = "switchboard-openfeature"
+version = "0.0.1"
+edition = "2021"
+rust-version = "1.70"
+description = "OpenFeature provider for Switchboard feature management (Rust). Placeholder release reserving the crate name."
+license = "Apache-2.0"
+homepage = "https://switchboard.co"
+repository = "https://github.com/switchboard-io/switchboard"
+readme = "README.md"
+keywords = ["feature-flags", "openfeature", "toggles", "provider", "switchboard"]
+categories = ["config", "development-tools"]
+
+[lib]
+name = "switchboard_openfeature"
+path = "src/lib.rs"

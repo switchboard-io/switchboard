@@ -1,0 +1,28 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "switchboard-openfeature-provider"
+version = "0.0.1"
+description = "OpenFeature provider for Switchboard feature management (Python). Placeholder release reserving the package name."
+readme = "README.md"
+requires-python = ">=3.8"
+license = "Apache-2.0"
+authors = [{ name = "Switchboard" }]
+keywords = ["feature-flags", "openfeature", "openfeature-provider", "feature-management", "switchboard"]
+classifiers = [
+  "Development Status :: 1 - Planning",
+  "Intended Audience :: Developers",
+  "License :: OSI Approved :: Apache Software License",
+  "Programming Language :: Python :: 3",
+  "Topic :: Software Development :: Libraries",
+]
+
+[project.urls]
+Homepage = "https://switchboard.co"
+Source = "https://github.com/switchboard-io/switchboard"
+Issues = "https://github.com/switchboard-io/switchboard/issues"
+
+[tool.hatch.build.targets.wheel]
+packages = ["switchboard_openfeature_provider"]

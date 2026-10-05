@@ -1,0 +1,39 @@
+## .NET / build output
+bin/
+obj/
+artifacts/
+*.user
+*.suo
+
+## Rider / VS
+.vs/
+.idea/
+
+## NuGet
+*.nupkg
+*.snupkg
+
+## Node
+node_modules/
+npm-debug.log*
+
+## Python
+__pycache__/
+*.pyc
+dist/
+build/
+*.egg-info/
+
+## Go
+/sdk/go/bin/
+
+## Java
+target/
+
+## Rust
+/sdk/rust/target/
+Cargo.lock
+
+## OS
+.DS_Store
+Thumbs.db
