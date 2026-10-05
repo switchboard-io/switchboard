@@ -7,13 +7,21 @@ All notable changes to this project are documented here. The format is based on
 ## [Unreleased]
 
 ### Added
-- Real evaluation engine implementing `docs/SPEC.md` (rules, segments, targets,
-  prerequisites, SHA1-based deterministic rollout bucketing).
-- Cross-language conformance suite (`conformance/`) with a shared corpus and a
-  per-language runner matrix.
-- Benchmark harness per language.
-- Interactive web playground and expanded docs.
-- Control-plane server (REST evaluation + flag management) and docker-compose.
+- Real evaluation engine implementing `docs/SPEC.md` in **six languages** (.NET, JS,
+  Python, Go, Java, Rust) plus Ruby — targeting, segment rules, prerequisites, and
+  SHA1-based deterministic rollout bucketing that is byte-identical across all SDKs.
+- Cross-language **conformance suite** (`conformance/`) with a shared corpus and a
+  per-language runner matrix — **150/150 checks passing across 6 languages**
+  (`conformance/RESULTS.md`), committed back by CI on every push.
+- **Benchmark harness** per language with measured numbers in `docs/BENCHMARKS.md`.
+- **Control-plane server** (ASP.NET Core: REST flag management, server-side evaluation,
+  Server-Sent-Events streaming) + Admin UI + `Dockerfile` + `docker-compose.yml`.
+- OpenFeature providers wired to the real clients.
+- **Web landing page + interactive playground** (`web/`) that runs the exact engine
+  (including SHA1 bucketing) in the browser; deployed via GitHub Pages.
+- Governance: `NOTICE`, `SECURITY.md`, `CONTRIBUTING.md`, `CODE_OF_CONDUCT.md`,
+  `RELEASING.md`, `scripts/check_versions.py`.
+- Workflows reshaped to `tests`, `conformance`, `benchmarks`, `pages`, `publish`.
 
 ## [0.0.1] - 2026-10-04
 
