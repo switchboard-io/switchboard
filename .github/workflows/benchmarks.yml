@@ -97,9 +97,10 @@ jobs:
           git config user.name "switchboard-io"
           git config user.email "switchboard-io@users.noreply.github.com"
           git add web/bench.json web/data.json
-          if ! git diff --cached --quiet; then
-            git commit -m "benchmarks: refresh dashboard throughput [skip ci]"
-            git push
-          else
-            echo "no benchmark change"
-          fi
+          if git diff --cached --quiet; then echo "no benchmark change"; exit 0; fi
+          git commit -m "benchmarks: refresh dashboard throughput [skip ci]"
+          for i in 1 2 3 4 5; do
+            git pull --rebase --autostash origin main && git push && exit 0
+            echo "push race, retrying ($i)…"; sleep 3
+          done
+          echo "could not push after retries"; exit 1
