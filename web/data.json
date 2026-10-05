@@ -1,46 +1,38 @@
 {
   "generated": "2026-10-05",
   "conformance": {
-    "total": 175,
-    "passing": 175,
+    "total": 0,
+    "passing": 0,
     "checksPerLang": 25,
     "cases": 22,
     "buckets": 3,
-    "languages": [
-      "dotnet",
-      "go",
-      "java",
-      "node",
-      "python",
-      "ruby",
-      "rust"
-    ]
+    "languages": []
   },
   "benchmarks": [
     {
       "lang": "Node",
-      "nsPerEval": 931,
-      "throughput": 1073858
+      "nsPerEval": 548.0,
+      "throughput": 1824970
     },
     {
       "lang": ".NET",
-      "nsPerEval": 1012,
-      "throughput": 987758
-    },
-    {
-      "lang": "Go",
-      "nsPerEval": 3137,
-      "throughput": 318771
+      "nsPerEval": 1,
+      "throughput": 929356
     },
     {
       "lang": "Rust",
-      "nsPerEval": 4215,
-      "throughput": 237265
+      "nsPerEval": 1671.0,
+      "throughput": 598459
+    },
+    {
+      "lang": "Go",
+      "nsPerEval": 2685.7,
+      "throughput": 372340
     },
     {
       "lang": "Python",
-      "nsPerEval": 6997,
-      "throughput": 142917
+      "nsPerEval": 5568.9,
+      "throughput": 179569
     }
   ],
   "buckets": [
