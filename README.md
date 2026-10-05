@@ -15,6 +15,21 @@ without vendor lock-in. Switchboard evaluates flags **locally, in-process** in e
 SDK, so flag checks add no network latency and keep working even if the server is
 unreachable.
 
+<p align="center">
+  <a href="https://switchboard-io.github.io/switchboard/"><img src="docs/screenshots/landing.png" width="49%" alt="Switchboard landing page (live site)"/></a>
+  <a href="https://switchboard-io.github.io/switchboard/dashboard.html"><img src="docs/screenshots/dashboard.png" width="49%" alt="Proof dashboard — 150/150 conformance across 6 languages + benchmarks"/></a>
+</p>
+<p align="center">
+  <a href="https://switchboard-io.github.io/switchboard/playground.html"><img src="docs/screenshots/playground.png" width="49%" alt="In-browser playground — evaluate a flag with the real engine"/></a>
+  <img src="docs/screenshots/admin.png" width="49%" alt="Admin dashboard — manage flags, targeting, rollouts, with live SSE updates"/>
+</p>
+<p align="center"><sub>
+  <b><a href="https://switchboard-io.github.io/switchboard/">Live site</a></b> ·
+  <a href="https://switchboard-io.github.io/switchboard/dashboard.html">Proof dashboard</a> ·
+  <a href="https://switchboard-io.github.io/switchboard/playground.html">Interactive playground</a> —
+  the <b>Admin dashboard</b> (bottom-right) ships with the self-hosted server (<code>docker compose up</code>).
+</sub></p>
+
 ---
 
 ## Why Switchboard

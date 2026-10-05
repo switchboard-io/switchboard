@@ -1,12 +1,19 @@
 {
   "generated": "2026-10-05",
   "conformance": {
-    "total": 0,
-    "passing": 0,
+    "total": 150,
+    "passing": 150,
     "checksPerLang": 25,
     "cases": 22,
     "buckets": 3,
-    "languages": []
+    "languages": [
+      "dotnet",
+      "go",
+      "java",
+      "node",
+      "python",
+      "rust"
+    ]
   },
   "benchmarks": [
     {
