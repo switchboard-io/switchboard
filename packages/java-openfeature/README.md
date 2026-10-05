@@ -2,7 +2,7 @@
 
 **OpenFeature provider for Switchboard (Java)** — plug Switchboard into any [OpenFeature](https://openfeature.dev)-based application.
 
-> ⚠️ **Placeholder release (0.0.1).** Reserves the Maven coordinates `io.github.switchboard-io:openfeature-provider` while the full provider is built.
+> **Not yet published.** The SDK is complete and conformance-tested — for now, build it from source from the [monorepo](https://github.com/switchboard-io/switchboard). Pre-built packages are coming.
 
 - Website: https://switchboard.co
 - Source: https://github.com/switchboard-io/switchboard

@@ -48,14 +48,14 @@
     </section>
 
     <h2 class="section">Install</h2>
-    <pre>dotnet add package Switchboard.Sdk
-npm install @switchboard/sdk
-pip install switchboard-sdk
-go get github.com/switchboard-io/switchboard-go
-cargo add switchboard-sdk</pre>
+    <p style="color:var(--muted);margin-top:-6px;">Self-host from source today — pre-built SDK packages are on the way.</p>
+    <pre>git clone https://github.com/switchboard-io/switchboard.git
+cd switchboard
+docker compose up --build
+# open http://localhost:8080 — Admin UI + REST + live updates</pre>
 
     <h2 class="section">Evaluate a flag (same shape everywhere)</h2>
-    <pre>import { SwitchboardClient } from "@switchboard/sdk";
+    <pre>import { SwitchboardClient } from "switchboard-sdk";
 
 const client = SwitchboardClient.fromJson(snapshot);
 const on = client.getBool("checkout-v2", {

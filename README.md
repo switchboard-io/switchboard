@@ -5,10 +5,7 @@
 [![Tests](https://github.com/switchboard-io/switchboard/actions/workflows/tests.yml/badge.svg)](https://github.com/switchboard-io/switchboard/actions/workflows/tests.yml)
 [![Conformance](https://github.com/switchboard-io/switchboard/actions/workflows/conformance.yml/badge.svg)](https://github.com/switchboard-io/switchboard/blob/main/conformance/RESULTS.md)
 [![License](https://img.shields.io/badge/license-Apache--2.0-blue)](LICENSE)
-[![NuGet](https://img.shields.io/nuget/v/Switchboard.Sdk?label=NuGet&logo=nuget)](https://www.nuget.org/packages/Switchboard.Sdk)
-[![npm](https://img.shields.io/npm/v/@switchboard/sdk?label=npm&logo=npm)](https://www.npmjs.com/package/@switchboard/sdk)
-[![PyPI](https://img.shields.io/pypi/v/switchboard-sdk?label=PyPI&logo=pypi&logoColor=white)](https://pypi.org/project/switchboard-sdk/)
-[![crates.io](https://img.shields.io/crates/v/switchboard-sdk?label=crates.io&logo=rust)](https://crates.io/crates/switchboard-sdk)
+![Languages](https://img.shields.io/badge/languages-6-3884ff)
 
 Feature flags, targeting, progressive rollouts, kill switches, and experimentation —
 without vendor lock-in. Switchboard evaluates flags **locally, in-process** in every
@@ -54,16 +51,24 @@ unreachable.
 
 ## Install
 
-| Language | Install |
-|----------|---------|
-| .NET | `dotnet add package Switchboard.Sdk` |
-| JavaScript | `npm install @switchboard/sdk` |
-| Python | `pip install switchboard-sdk` |
-| Go | `go get github.com/switchboard-io/switchboard-go` |
-| Rust | `cargo add switchboard-sdk` |
-| Java | `io.github.switchboard-io:sdk` (Maven) |
+> **Status:** self-host from source today. Pre-built SDK packages (NuGet, npm, PyPI,
+> crates.io, Maven, Go modules) are on the way — follow the repo for the first release.
 
-## Quickstart
+Run the whole platform locally with Docker:
+
+```bash
+git clone https://github.com/switchboard-io/switchboard.git
+cd switchboard
+docker compose up --build
+# open http://localhost:8080  — the Admin UI (create flags, evaluate, live updates)
+```
+
+Or build an SDK from source and reference it in your app — see the per-language
+projects under [`packages/`](packages/).
+
+## Quickstart (SDK API)
+
+The same API shape in every language:
 
 ```csharp
 // .NET
@@ -77,7 +82,7 @@ bool on = client.GetBool("checkout-v2", ctx, defaultValue: false);
 
 ```js
 // JavaScript
-import { SwitchboardClient } from "@switchboard/sdk";
+import { SwitchboardClient } from "switchboard-sdk";
 const client = SwitchboardClient.fromJson(snapshot);
 const on = client.getBool("checkout-v2", { key: "user-42", attributes: { country: "US" } });
 ```
@@ -106,10 +111,12 @@ curl -X POST localhost:8080/api/eval/welcome-banner -d '{"key":"u1","attributes"
 
 ## CLI
 
+Build and run the CLI from source:
+
 ```bash
-dotnet tool install -g Switchboard.Cli
-switchboard eval checkout-v2 --config flags.json --context '{"key":"u1","attributes":{"country":"US"}}'
-switchboard bucket checkout-v2 abc user-1     # deterministic rollout bucket
+dotnet run --project packages/dotnet/Switchboard.Cli -- \
+  eval checkout-v2 --config flags.json --context '{"key":"u1","attributes":{"country":"US"}}'
+dotnet run --project packages/dotnet/Switchboard.Cli -- bucket checkout-v2 abc user-1  # deterministic rollout bucket
 ```
 
 ## Performance
