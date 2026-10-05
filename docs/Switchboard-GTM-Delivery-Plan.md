@@ -99,7 +99,7 @@ flowchart TB
 - ✅ **Icon** (`<PackageIcon>`), **License** (`<PackageLicenseExpression>Apache-2.0`).
 - ✅ **Source Link** enabled + **deterministic builds** + **symbol packages** (`.snupkg`).
 - ✅ **Signed packages** (author + repository signing).
-- ✅ **SemVer** version; multi-target (`net8.0;net9.0;netstandard2.0` for widest reach).
+- ✅ **SemVer** version; multi-target (`net10.0;netstandard2.0` for widest reach).
 - ✅ SBOM + provenance (SLSA) attached.
 
 ### 3.3 Sample `.csproj` metadata

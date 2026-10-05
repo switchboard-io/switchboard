@@ -6,6 +6,11 @@ All notable changes to this project are documented here. The format is based on
 
 ## [Unreleased]
 
+### Changed
+- Upgraded all .NET projects (engine, SDK, OpenFeature provider, CLI, server, tests,
+  benchmark) to **.NET 10**; libraries continue to multi-target `netstandard2.0` for
+  broad consumer reach. Docker images and CI updated to the .NET 10 SDK/runtime.
+
 ### Added
 - Real evaluation engine implementing `docs/SPEC.md` in **six languages** (.NET, JS,
   Python, Go, Java, Rust) plus Ruby — targeting, segment rules, prerequisites, and

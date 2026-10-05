@@ -7,7 +7,7 @@
 - **Status:** Design v1.0
 - **Date:** 2026-08-05
 - **Owner:** [Parag Sawant](https://parags.dev) ([GitHub](https://github.com/paragpsawant))
-- **Language / runtime:** C# / .NET 8+ (LTS)
+- **Language / runtime:** C# / .NET 10 (latest)
 
 ---
 
@@ -655,7 +655,7 @@ switchboard lifecycle stale --days 30
 | **Observability** | OpenTelemetry traces/metrics/logs across control plane, relay, and SDKs. |
 | **Consistency** | Postgres transactions + monotonic `version` per FlagConfig; SDKs reconcile by version. |
 
-**Recommended stack:** .NET 8/9, ASP.NET Core (Minimal APIs + gRPC), HotChocolate (GraphQL), System.CommandLine (CLI), PostgreSQL (source of truth), Redis (cache + fan-out), ClickHouse (analytics), Docker + Helm/Kubernetes, OpenFeature (SDK contract), Keycloak/Entra ID (auth).
+**Recommended stack:** .NET 10, ASP.NET Core (Minimal APIs + gRPC), HotChocolate (GraphQL), System.CommandLine (CLI), PostgreSQL (source of truth), Redis (cache + fan-out), ClickHouse (analytics), Docker + Helm/Kubernetes, OpenFeature (SDK contract), Keycloak/Entra ID (auth).
 
 ---
 

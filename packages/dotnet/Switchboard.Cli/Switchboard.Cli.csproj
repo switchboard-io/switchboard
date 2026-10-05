@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
-    <TargetFramework>net8.0</TargetFramework>
+    <TargetFramework>net10.0</TargetFramework>
     <PackageId>Switchboard.Cli</PackageId>
     <Title>Switchboard CLI</Title>
     <Description>Command-line interface for Switchboard feature management. Install as a global tool: dotnet tool install -g Switchboard.Cli. Evaluate flags and compute rollout buckets from your terminal or CI.</Description>

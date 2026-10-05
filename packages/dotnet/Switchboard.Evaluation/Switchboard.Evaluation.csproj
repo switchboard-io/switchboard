@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <PackageId>Switchboard.Evaluation</PackageId>
-    <TargetFrameworks>net8.0;netstandard2.0</TargetFrameworks>
+    <TargetFrameworks>net10.0;netstandard2.0</TargetFrameworks>
     <Title>Switchboard Evaluation Engine</Title>
     <Description>The deterministic feature-flag evaluation engine shared by the Switchboard server and all .NET SDKs. Implements the Switchboard evaluation spec (targeting, rules, prerequisites, SHA1 rollout bucketing).</Description>
     <RootNamespace>Switchboard.Evaluation</RootNamespace>

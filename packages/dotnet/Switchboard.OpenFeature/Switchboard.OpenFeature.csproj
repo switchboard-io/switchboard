@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <PackageId>Switchboard.OpenFeature</PackageId>
-    <TargetFrameworks>net8.0;netstandard2.0</TargetFrameworks>
+    <TargetFrameworks>net10.0;netstandard2.0</TargetFrameworks>
     <Title>Switchboard OpenFeature Provider</Title>
     <Description>OpenFeature provider for Switchboard feature management (.NET). Plug Switchboard into any OpenFeature-based app. Placeholder release reserving the package ID.</Description>
     <RootNamespace>Switchboard.OpenFeature</RootNamespace>

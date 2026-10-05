@@ -4,7 +4,7 @@
        pulls in Switchboard.Sdk so `dotnet add package Switchboard` just works. -->
   <PropertyGroup>
     <PackageId>Switchboard</PackageId>
-    <TargetFrameworks>net8.0;netstandard2.0</TargetFrameworks>
+    <TargetFrameworks>net10.0;netstandard2.0</TargetFrameworks>
     <Title>Switchboard</Title>
     <Description>Switchboard feature management for .NET — the friendly umbrella package that references the Switchboard SDK. Placeholder release reserving the package ID.</Description>
     <RootNamespace>Switchboard.Meta</RootNamespace>
