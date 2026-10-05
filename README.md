@@ -16,6 +16,10 @@ SDK, so flag checks add no network latency and keep working even if the server i
 unreachable.
 
 <p align="center">
+  <img src="docs/diagrams/architecture.svg" width="90%" alt="Switchboard architecture — control plane streams flag changes through an edge relay to six-language SDKs that evaluate locally; conformance proves all six are identical in CI"/>
+</p>
+
+<p align="center">
   <a href="https://switchboard-io.github.io/switchboard/"><img src="docs/screenshots/landing.png" width="49%" alt="Switchboard landing page (live site)"/></a>
   <a href="https://switchboard-io.github.io/switchboard/dashboard.html"><img src="docs/screenshots/dashboard.png" width="49%" alt="Proof dashboard — 150/150 conformance across 6 languages + benchmarks"/></a>
 </p>
