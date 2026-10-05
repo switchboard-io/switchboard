@@ -1,0 +1,136 @@
+name: Publish (manual, per ecosystem)
+
+# Manually publish one ecosystem at a time as its registry credentials land.
+# Pick the target from the dropdown when running the workflow. Each job is
+# idempotent (skips if the version already exists).
+
+on:
+  workflow_dispatch:
+    inputs:
+      target:
+        description: Which ecosystem to publish
+        required: true
+        type: choice
+        options: [nuget, npm, pypi, crates, rubygems, maven, go]
+
+permissions:
+  contents: read
+
+jobs:
+  nuget:
+    if: ${{ inputs.target == 'nuget' }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-dotnet@v4
+        with: { dotnet-version: "8.0.x" }
+      - run: dotnet pack -c Release -o out
+      - run: dotnet nuget push "out/*.nupkg" --api-key "${{ secrets.NUGET_API_KEY }}" --source https://api.nuget.org/v3/index.json --skip-duplicate
+
+  npm:
+    if: ${{ inputs.target == 'npm' }}
+    runs-on: ubuntu-latest
+    permissions: { id-token: write }
+    strategy:
+      matrix:
+        pkg: [js, js-openfeature]
+    defaults:
+      run:
+        working-directory: packages/${{ matrix.pkg }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: "20", registry-url: "https://registry.npmjs.org" }
+      - run: npm publish --provenance --access public || npm view "$(node -p "require('./package.json').name")@$(node -p "require('./package.json').version")" version
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+  pypi:
+    if: ${{ inputs.target == 'pypi' }}
+    runs-on: ubuntu-latest
+    permissions: { id-token: write }
+    strategy:
+      matrix:
+        pkg: [python, python-openfeature]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: "3.12" }
+      - run: pip install build
+      - run: python -m build
+        working-directory: packages/${{ matrix.pkg }}
+      - uses: pypa/gh-action-pypi-publish@release/v1
+        with:
+          packages-dir: packages/${{ matrix.pkg }}/dist
+          skip-existing: true
+
+  crates:
+    if: ${{ inputs.target == 'crates' }}
+    runs-on: ubuntu-latest
+    strategy:
+      max-parallel: 1
+      matrix:
+        pkg: [rust, rust-openfeature]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@stable
+      - run: cargo publish --manifest-path packages/${{ matrix.pkg }}/Cargo.toml --token "${{ secrets.CARGO_REGISTRY_TOKEN }}" --allow-dirty || true
+
+  rubygems:
+    if: ${{ inputs.target == 'rubygems' }}
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        include:
+          - { dir: ruby, gemspec: switchboard-sdk.gemspec }
+          - { dir: ruby-openfeature, gemspec: switchboard-openfeature.gemspec }
+    defaults:
+      run:
+        working-directory: packages/${{ matrix.dir }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ruby/setup-ruby@v1
+        with: { ruby-version: "3.2" }
+      - env:
+          GEM_HOST_API_KEY: ${{ secrets.RUBYGEMS_API_KEY }}
+        run: |
+          gem build ${{ matrix.gemspec }}
+          gem push *.gem || true
+
+  maven:
+    if: ${{ inputs.target == 'maven' }}
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        pkg: [java, java-openfeature]
+    defaults:
+      run:
+        working-directory: packages/${{ matrix.pkg }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "17"
+          server-id: central
+          server-username: MAVEN_USERNAME
+          server-password: MAVEN_PASSWORD
+          gpg-private-key: ${{ secrets.MAVEN_GPG_PRIVATE_KEY }}
+          gpg-passphrase: MAVEN_GPG_PASSPHRASE
+      - env:
+          MAVEN_USERNAME: ${{ secrets.MAVEN_USERNAME }}
+          MAVEN_PASSWORD: ${{ secrets.MAVEN_PASSWORD }}
+          MAVEN_GPG_PASSPHRASE: ${{ secrets.MAVEN_GPG_PASSPHRASE }}
+        run: mvn -B deploy -DskipTests
+
+  go:
+    if: ${{ inputs.target == 'go' }}
+    runs-on: ubuntu-latest
+    permissions: { contents: write }
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-go@v5
+        with: { go-version: "1.22" }
+      - working-directory: packages/go
+        run: go build ./...
+      - run: echo "Go publishes by tag (go-v*); proxy.golang.org indexes on first fetch."

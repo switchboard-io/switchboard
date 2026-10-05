@@ -1,8 +1,9 @@
 <Solution>
-  <Folder Name="/src/">
-    <Project Path="src/Switchboard.Cli/Switchboard.Cli.csproj" />
-    <Project Path="src/Switchboard.OpenFeature/Switchboard.OpenFeature.csproj" />
-    <Project Path="src/Switchboard.Sdk/Switchboard.Sdk.csproj" />
-    <Project Path="src/Switchboard/Switchboard.csproj" />
+  <Folder Name="/packages/" />
+  <Folder Name="/packages/dotnet/">
+    <Project Path="packages/dotnet/Switchboard.Cli/Switchboard.Cli.csproj" />
+    <Project Path="packages/dotnet/Switchboard.OpenFeature/Switchboard.OpenFeature.csproj" />
+    <Project Path="packages/dotnet/Switchboard.Sdk/Switchboard.Sdk.csproj" />
+    <Project Path="packages/dotnet/Switchboard/Switchboard.csproj" />
   </Folder>
 </Solution>

@@ -1,0 +1,110 @@
+name: Conformance
+
+# Runs the shared corpus through all six language implementations, then aggregates
+# a cross-language evaluation-parity matrix. This is the proof behind Switchboard's
+# "every SDK evaluates identically" guarantee (see docs/SPEC.md).
+
+on:
+  push:
+    branches: [main]
+    paths: ["packages/**", "conformance/**", ".github/workflows/conformance.yml"]
+  pull_request:
+    paths: ["packages/**", "conformance/**"]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  dotnet:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-dotnet@v4
+        with: { dotnet-version: "8.0.x" }
+      - run: dotnet run -c Release --project conformance/runners/dotnet
+      - uses: actions/upload-artifact@v4
+        with: { name: result-dotnet, path: conformance/results/dotnet.json }
+
+  node:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: "20" }
+      - run: node conformance/runners/run.js
+      - uses: actions/upload-artifact@v4
+        with: { name: result-node, path: conformance/results/node.json }
+
+  python:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: "3.12" }
+      - run: pip install -e packages/python
+      - run: python conformance/runners/run.py
+      - uses: actions/upload-artifact@v4
+        with: { name: result-python, path: conformance/results/python.json }
+
+  rust:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@stable
+      - run: cargo run --release --manifest-path conformance/runners/rust/Cargo.toml
+      - uses: actions/upload-artifact@v4
+        with: { name: result-rust, path: conformance/results/rust.json }
+
+  go:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-go@v5
+        with: { go-version: "1.22", cache: false }
+      - run: go run .
+        working-directory: conformance/runners/go
+      - uses: actions/upload-artifact@v4
+        with: { name: result-go, path: conformance/results/go.json }
+
+  java:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with: { distribution: temurin, java-version: "17" }
+      - working-directory: conformance/runners/java
+        run: mvn -B -q compile exec:java
+      - uses: actions/upload-artifact@v4
+        with: { name: result-java, path: conformance/results/java.json }
+
+  aggregate:
+    needs: [dotnet, node, python, rust, go, java]
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: "3.12" }
+      - uses: actions/download-artifact@v4
+        with: { path: conformance/_artifacts }
+      - name: collect results
+        run: |
+          mkdir -p conformance/results
+          find conformance/_artifacts -name '*.json' -exec cp {} conformance/results/ \;
+          ls -la conformance/results
+      - run: python conformance/aggregate.py
+      - run: cat conformance/RESULTS.md
+      - name: commit the six-language matrix back to main
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        run: |
+          git config user.name "switchboard-io"
+          git config user.email "switchboard-io@users.noreply.github.com"
+          if ! git diff --quiet -- conformance/RESULTS.md; then
+            git add conformance/RESULTS.md
+            git commit -m "conformance: refresh six-language results matrix [skip ci]"
+            git push
+          else
+            echo "RESULTS.md unchanged"
+          fi
