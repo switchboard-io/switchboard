@@ -6,7 +6,7 @@ require "json"
 
 here = File.expand_path(__dir__)
 root = File.expand_path("..", here) # conformance/
-$LOAD_PATH.unshift(File.expand_path("../../packages/ruby/lib", root))
+$LOAD_PATH.unshift(File.expand_path("../packages/ruby/lib", root))
 require "switchboard/sdk"
 
 corpus = JSON.parse(File.read(File.join(root, "corpus.json")))

@@ -10,6 +10,9 @@ fn find_root() -> PathBuf {
         if dir.join("corpus.json").exists() {
             return dir;
         }
+        if dir.join("conformance/corpus.json").exists() {
+            return dir.join("conformance");
+        }
         if !dir.pop() {
             panic!("corpus.json not found");
         }
