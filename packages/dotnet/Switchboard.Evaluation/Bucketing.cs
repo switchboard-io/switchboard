@@ -11,8 +11,9 @@ namespace Switchboard.Evaluation;
 /// </summary>
 public static class Bucketing
 {
-    // 15 hex 'f' characters = 60 bits = 1152921504606846975
-    private const double MaxValue = 0xFFFFFFFFFFFFFFF;
+    // 13 hex 'f' characters = 52 bits = 4503599627370495 (2^52 - 1),
+    // chosen so the integer is exactly representable as a double in every language.
+    private const double MaxValue = 0xFFFFFFFFFFFFF;
 
     /// <summary>Returns a stable bucket in [0, 1) for the given inputs.</summary>
     public static double BucketOf(string flagKey, string salt, string contextKey)
@@ -30,8 +31,8 @@ public static class Bucketing
         foreach (var b in hash) sb.Append(b.ToString("X2"));
         var hex = sb.ToString();
 #endif
-        var hex15 = hex.Substring(0, 15);
-        long n = Convert.ToInt64(hex15, 16);
+        var hex13 = hex.Substring(0, 13);
+        long n = Convert.ToInt64(hex13, 16);
         return n / MaxValue;
     }
 }

@@ -1,13 +1,24 @@
-// @switchboard/openfeature-provider — placeholder release (0.0.1)
-// Reserves the name on npm while the full OpenFeature provider is built.
-// Docs: https://switchboard.co  •  Source: https://github.com/switchboard-io/switchboard
+// @switchboard/openfeature-provider — OpenFeature-style provider backed by the
+// Switchboard local-evaluation client. Exposes resolve methods returning a value
+// plus the evaluation reason (OpenFeature ResolutionDetails shape).
+export const metadata = { name: "Switchboard" };
 
-export const name = "Switchboard";
-export const isPlaceholder = true;
+export class SwitchboardProvider {
+  /** @param {{ evaluateDetail: (key: string, ctx: object) => {value:any,reason:string} }} client */
+  constructor(client) { this.client = client; }
 
-/** Returns a short description of the provider. */
-export function about() {
-  return "@switchboard/openfeature-provider (placeholder) — OpenFeature provider for JS/TS. See https://switchboard.co";
+  resolveBooleanEvaluation(key, def, ctx) {
+    const r = this.client.evaluateDetail(key, ctx || { key: "anonymous" });
+    return { value: typeof r.value === "boolean" ? r.value : def, reason: r.reason };
+  }
+  resolveStringEvaluation(key, def, ctx) {
+    const r = this.client.evaluateDetail(key, ctx || { key: "anonymous" });
+    return { value: typeof r.value === "string" ? r.value : def, reason: r.reason };
+  }
+  resolveNumberEvaluation(key, def, ctx) {
+    const r = this.client.evaluateDetail(key, ctx || { key: "anonymous" });
+    return { value: typeof r.value === "number" ? r.value : def, reason: r.reason };
+  }
 }
 
-export default { name, isPlaceholder, about };
+export default { metadata, SwitchboardProvider };

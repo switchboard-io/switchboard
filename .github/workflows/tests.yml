@@ -57,8 +57,21 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/setup-java@v4
         with: { distribution: temurin, java-version: "17" }
-      - working-directory: packages/java
-        run: mvn -B test
+      - name: Compile + run self-test (dependency-free)
+        working-directory: packages/java
+        run: |
+          mkdir -p out
+          javac -d out $(find src -name '*.java')
+          java -ea -cp out io.github.switchboard.sdk.SelfTest
+
+  ruby:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ruby/setup-ruby@v1
+        with: { ruby-version: "3.2" }
+      - working-directory: packages/ruby
+        run: ruby -Ilib test/test_evaluation.rb
 
   versions:
     runs-on: ubuntu-latest

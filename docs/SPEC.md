@@ -78,9 +78,9 @@ Any structural error (missing variation index, bad config) returns
 bucketOf(flagKey, salt, contextKey) -> float in [0, 1):
     input  = flagKey + "." + salt + "." + contextKey
     digest = SHA1(input)                      # 20 bytes
-    hex15  = first 15 hex chars of digest     # 60 bits
-    n      = parseInt(hex15, base 16)         # fits in int64
-    return n / 0xFFFFFFFFFFFFFFF              # 1152921504606846975
+    hex13  = first 13 hex chars of digest     # 52 bits
+    n      = parseInt(hex13, base 16)         # <= 2^52-1, exact in IEEE-754 double
+    return n / 0xFFFFFFFFFFFFF                # 4503599627370495  (2^52 - 1)
 ```
 
 `resolve(rollout)`:
@@ -93,8 +93,11 @@ for wv in rollout:
 return rollout[last].variation
 ```
 
-SHA1 is in every target language's standard library, so the hash — and therefore the
-rollout slice every user lands in — is **identical across .NET, JS, Python, Go, Java, Rust**.
+SHA1 is in every target language's standard library. We take **13 hex chars (52 bits)**
+specifically so the integer is exactly representable as an IEEE-754 double in **every**
+language — including JavaScript, whose `Number` is only safe to 2^53. That makes the
+bucket — and therefore the rollout slice every user lands in — **identical across .NET,
+JS, Python, Go, Java, Rust**.
 
 ## 5. Result
 ```json

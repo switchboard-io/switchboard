@@ -3,7 +3,7 @@ name = "switchboard-sdk"
 version = "0.0.1"
 edition = "2021"
 rust-version = "1.70"
-description = "Local-evaluation feature-flag SDK for Rust. Real-time, offline-capable, OpenFeature-compatible. Placeholder release reserving the crate name."
+description = "Local-evaluation feature-flag SDK for Rust. Real-time, offline-capable, OpenFeature-compatible."
 license = "Apache-2.0"
 homepage = "https://switchboard.co"
 repository = "https://github.com/switchboard-io/switchboard"
@@ -14,3 +14,8 @@ categories = ["config", "development-tools"]
 [lib]
 name = "switchboard_sdk"
 path = "src/lib.rs"
+
+[dependencies]
+serde_json = "1"
+sha1 = "0.10"
+hex = "0.4"
