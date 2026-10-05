@@ -5,8 +5,8 @@ set -euo pipefail
 lang="$1"
 log="$2"
 
-throughput=$(grep -i 'throughput' "$log" | grep -oE '[0-9,]+' | tr -d ',' | head -1)
-ns=$(grep -i 'per eval' "$log" | grep -oE '[0-9.]+' | head -1)
+throughput=$(grep -i 'throughput' "$log" | tr -d ',' | grep -oE '[0-9]+' | head -1)
+ns=$(grep -i 'per eval' "$log" | tr -d ',' | grep -oE '[0-9.]+' | head -1)
 
 slug=$(echo "$lang" | tr '[:upper:]' '[:lower:]' | tr -cd 'a-z0-9')
 cat > "bench-${slug}.json" <<EOF
