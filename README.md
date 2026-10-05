@@ -139,6 +139,11 @@ scripts/                version-sync + tooling
 - [Architecture & design](docs/Switchboard-Feature-Management-Design.md).
 - [Go-to-market plan](docs/Switchboard-GTM-Delivery-Plan.md).
 
+## Author
+
+Switchboard is built and maintained by **[Parag Sawant](https://parags.dev)**
+([GitHub](https://github.com/paragpsawant)). Issues and pull requests are welcome.
+
 ## License
 
 [Apache-2.0](LICENSE). Contributions welcome — see [CONTRIBUTING.md](CONTRIBUTING.md).

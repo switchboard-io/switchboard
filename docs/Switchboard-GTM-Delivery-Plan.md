@@ -4,7 +4,7 @@
 
 - **Status:** GTM Plan v1.0
 - **Date:** 2026-08-05
-- **Owner:** Parag
+- **Owner:** [Parag Sawant](https://parags.dev) ([GitHub](https://github.com/paragpsawant))
 - **Companion to:** `Switchboard-Feature-Management-Design.md`
 
 ---

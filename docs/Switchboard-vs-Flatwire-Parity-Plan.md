@@ -3,7 +3,7 @@
 **What it takes for `switchboard-io/switchboard` to reach the same bar as [`flatwire-io/flatwire`](https://github.com/flatwire-io/flatwire).**
 
 - **Date:** 2026-10-04
-- **Owner:** Parag
+- **Owner:** [Parag Sawant](https://parags.dev) ([GitHub](https://github.com/paragpsawant))
 - **Source scanned:** `flatwire-io/flatwire` @ `main` (201 tree entries, 6 languages, 5 workflows)
 
 ---
