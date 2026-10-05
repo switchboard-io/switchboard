@@ -1,0 +1,15 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <PackageId>Switchboard.Evaluation</PackageId>
+    <TargetFrameworks>net8.0;netstandard2.0</TargetFrameworks>
+    <Title>Switchboard Evaluation Engine</Title>
+    <Description>The deterministic feature-flag evaluation engine shared by the Switchboard server and all .NET SDKs. Implements the Switchboard evaluation spec (targeting, rules, prerequisites, SHA1 rollout bucketing).</Description>
+    <RootNamespace>Switchboard.Evaluation</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup Condition="'$(TargetFramework)' == 'netstandard2.0'">
+    <PackageReference Include="System.Text.Json" Version="8.0.5" />
+  </ItemGroup>
+
+</Project>

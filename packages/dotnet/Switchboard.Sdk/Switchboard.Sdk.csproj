@@ -4,8 +4,12 @@
     <PackageId>Switchboard.Sdk</PackageId>
     <TargetFrameworks>net8.0;netstandard2.0</TargetFrameworks>
     <Title>Switchboard SDK</Title>
-    <Description>Local-evaluation feature-flag SDK for .NET. Real-time streaming updates, offline-capable, and OpenFeature-compatible. Placeholder release reserving the package ID.</Description>
+    <Description>Local-evaluation feature-flag SDK for .NET. Loads flag configuration and evaluates flags in-process using the Switchboard evaluation engine. OpenFeature-compatible.</Description>
     <RootNamespace>Switchboard</RootNamespace>
   </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Switchboard.Evaluation\Switchboard.Evaluation.csproj" />
+  </ItemGroup>
 
 </Project>

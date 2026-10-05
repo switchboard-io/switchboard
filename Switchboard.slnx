@@ -1,7 +1,10 @@
 <Solution>
   <Folder Name="/packages/" />
   <Folder Name="/packages/dotnet/">
+    <Project Path="packages/dotnet/Switchboard.Bench/Switchboard.Bench.csproj" />
     <Project Path="packages/dotnet/Switchboard.Cli/Switchboard.Cli.csproj" />
+    <Project Path="packages/dotnet/Switchboard.Evaluation.Tests/Switchboard.Evaluation.Tests.csproj" />
+    <Project Path="packages/dotnet/Switchboard.Evaluation/Switchboard.Evaluation.csproj" />
     <Project Path="packages/dotnet/Switchboard.OpenFeature/Switchboard.OpenFeature.csproj" />
     <Project Path="packages/dotnet/Switchboard.Sdk/Switchboard.Sdk.csproj" />
     <Project Path="packages/dotnet/Switchboard/Switchboard.csproj" />
