@@ -129,6 +129,7 @@ scripts/                version-sync + tooling
 
 - [Evaluation spec](docs/SPEC.md) — the contract every SDK implements.
 - [Guide](docs/GUIDE.md) — concepts: flags, targeting, rollouts, prerequisites.
+- [Migrate from LaunchDarkly](docs/MIGRATE-FROM-LAUNCHDARKLY.md) — concept mapping + step-by-step.
 - [Conformance results](conformance/RESULTS.md) — the six-language parity matrix.
 - [Benchmarks](docs/BENCHMARKS.md) — measured throughput per language.
 - [Architecture & design](docs/Switchboard-Feature-Management-Design.md).
