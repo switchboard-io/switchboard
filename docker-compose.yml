@@ -1,0 +1,36 @@
+# Switchboard — local deployment.
+#
+#   docker compose up --build
+#   open http://localhost:8080   (Admin UI)
+#
+# The all-in-one image embeds the control plane + evaluation engine + Admin UI
+# with an in-memory store — perfect for a local trial. For production, point the
+# server at the postgres + redis services (wiring is on the roadmap) and scale the
+# relay separately.
+
+services:
+  switchboard:
+    build:
+      context: .
+      dockerfile: packages/dotnet/Switchboard.Server/Dockerfile
+    image: switchboard/all-in-one:dev
+    ports:
+      - "8080:8080"
+    environment:
+      ASPNETCORE_URLS: http://0.0.0.0:8080
+    restart: unless-stopped
+
+  # --- Production backing services (not yet wired; here as the documented target) ---
+  # postgres:
+  #   image: postgres:16
+  #   environment:
+  #     POSTGRES_USER: switchboard
+  #     POSTGRES_PASSWORD: switchboard
+  #     POSTGRES_DB: switchboard
+  #   volumes: [ "pgdata:/var/lib/postgresql/data" ]
+  #
+  # redis:
+  #   image: redis:7
+  #
+# volumes:
+#   pgdata:

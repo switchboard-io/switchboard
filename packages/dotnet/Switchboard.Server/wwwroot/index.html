@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Switchboard — Admin</title>
+  <style>
+    :root { --bg:#181c26; --panel:#222736; --ink:#e8eef9; --muted:#9aa4bd; --accent:#3884ff; }
+    * { box-sizing:border-box; }
+    body { margin:0; font:15px/1.5 system-ui,Segoe UI,Roboto,sans-serif; background:var(--bg); color:var(--ink); }
+    header { padding:18px 24px; border-bottom:1px solid #2c3346; display:flex; align-items:center; gap:12px; }
+    header h1 { font-size:18px; margin:0; }
+    .dot { width:10px; height:10px; border-radius:50%; background:#3ddc84; display:inline-block; }
+    main { display:grid; grid-template-columns:1fr 1fr; gap:20px; padding:24px; max-width:1100px; }
+    .card { background:var(--panel); border:1px solid #2c3346; border-radius:10px; padding:18px; }
+    h2 { font-size:14px; text-transform:uppercase; letter-spacing:.05em; color:var(--muted); margin:0 0 12px; }
+    pre { background:#141824; padding:12px; border-radius:8px; overflow:auto; font-size:13px; }
+    textarea,input { width:100%; background:#141824; color:var(--ink); border:1px solid #2c3346; border-radius:8px; padding:10px; font:13px ui-monospace,Consolas,monospace; }
+    button { background:var(--accent); color:#fff; border:0; border-radius:8px; padding:10px 16px; font-weight:600; cursor:pointer; }
+    button:hover { filter:brightness(1.08); }
+    .row { display:flex; gap:10px; align-items:center; margin:8px 0; }
+    .flag { padding:8px 10px; border:1px solid #2c3346; border-radius:8px; margin-bottom:8px; display:flex; justify-content:space-between; }
+    .on { color:#3ddc84; } .off { color:#9aa4bd; }
+    code { color:#8ab4ff; }
+  </style>
+</head>
+<body>
+  <header>
+    <span class="dot" id="dot"></span>
+    <h1>Switchboard</h1>
+    <span style="color:var(--muted)">Admin · <span id="ver">v?</span></span>
+  </header>
+  <main>
+    <section class="card">
+      <h2>Flags</h2>
+      <div id="flags">loading…</div>
+      <button onclick="load()">Refresh</button>
+    </section>
+    <section class="card">
+      <h2>Evaluate</h2>
+      <div class="row"><input id="flagKey" placeholder="flag key" value="welcome-banner" /></div>
+      <textarea id="ctx" rows="4">{ "key": "user-42", "attributes": { "country": "US" } }</textarea>
+      <div class="row"><button onclick="evaluate()">Evaluate</button></div>
+      <pre id="result">—</pre>
+    </section>
+    <section class="card" style="grid-column:1/3">
+      <h2>Create / update flag</h2>
+      <textarea id="flagJson" rows="8">{
+  "key": "checkout-v2",
+  "enabled": true,
+  "variations": ["off", "on"],
+  "offVariation": 0,
+  "rules": [{ "clauses": [{ "attribute": "plan", "op": "in", "values": ["pro"] }], "variation": 1 }],
+  "fallthrough": { "rollout": [{ "variation": 0, "weight": 75000 }, { "variation": 1, "weight": 25000 }] },
+  "salt": "abc"
+}</textarea>
+      <div class="row"><button onclick="save()">Save flag</button></div>
+    </section>
+  </main>
+<script>
+async function load() {
+  const r = await fetch('/api/flags'); const d = await r.json();
+  document.getElementById('ver').textContent = 'v' + d.version;
+  document.getElementById('flags').innerHTML = d.flags.map(f =>
+    `<div class="flag"><span><code>${f.key}</code></span>
+     <span class="${f.enabled?'on':'off'}">${f.enabled?'ENABLED':'disabled'}</span></div>`).join('') || '<em>no flags</em>';
+}
+async function evaluate() {
+  const key = document.getElementById('flagKey').value;
+  const ctx = document.getElementById('ctx').value;
+  const r = await fetch('/api/eval/' + encodeURIComponent(key), { method:'POST', body: ctx });
+  document.getElementById('result').textContent = JSON.stringify(await r.json(), null, 2);
+}
+async function save() {
+  const body = document.getElementById('flagJson').value;
+  const key = JSON.parse(body).key;
+  await fetch('/api/flags/' + encodeURIComponent(key), { method:'PUT', body });
+  load();
+}
+// live updates via SSE
+const es = new EventSource('/api/stream');
+es.addEventListener('change', e => { document.getElementById('dot').style.background = '#3884ff'; load(); setTimeout(()=>document.getElementById('dot').style.background='#3ddc84',400); });
+load();
+</script>
+</body>
+</html>
