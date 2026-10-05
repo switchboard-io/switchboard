@@ -9,13 +9,13 @@ import java.util.Map;
  * A tiny, dependency-free JSON parser producing Map/List/String/Double/Boolean/null.
  * Keeps the SDK self-contained; swap for Jackson/Gson in a host app if preferred.
  */
-final class MiniJson {
+public final class MiniJson {
     private final String s;
     private int i;
 
     private MiniJson(String s) { this.s = s; }
 
-    static Object parse(String text) {
+    public static Object parse(String text) {
         MiniJson p = new MiniJson(text);
         p.ws();
         Object v = p.value();

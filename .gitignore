@@ -37,3 +37,8 @@ Cargo.lock
 ## OS
 .DS_Store
 Thumbs.db
+
+## Conformance generated per-language outputs
+conformance/results/
+conformance/_artifacts/
+conformance/runners/go/go.sum

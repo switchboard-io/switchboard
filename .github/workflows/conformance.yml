@@ -73,13 +73,26 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/setup-java@v4
         with: { distribution: temurin, java-version: "17" }
-      - working-directory: conformance/runners/java
-        run: mvn -B -q compile exec:java
+      - name: Compile SDK + runner, then run
+        run: |
+          mkdir -p conformance/runners/java/out
+          javac -d conformance/runners/java/out $(find packages/java/src/main -name '*.java') conformance/runners/java/Runner.java
+          (cd conformance/runners/java && java -cp out Runner)
       - uses: actions/upload-artifact@v4
         with: { name: result-java, path: conformance/results/java.json }
 
+  ruby:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ruby/setup-ruby@v1
+        with: { ruby-version: "3.2" }
+      - run: ruby conformance/runners/run.rb
+      - uses: actions/upload-artifact@v4
+        with: { name: result-ruby, path: conformance/results/ruby.json }
+
   aggregate:
-    needs: [dotnet, node, python, rust, go, java]
+    needs: [dotnet, node, python, rust, go, java, ruby]
     runs-on: ubuntu-latest
     permissions:
       contents: write

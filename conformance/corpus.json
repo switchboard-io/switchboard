@@ -1,0 +1,47 @@
+{
+  "description": "Shared conformance corpus. Every language runner loads this, evaluates each case against its own engine, and emits results/<lang>.json. aggregate.py proves all engines agree (see docs/SPEC.md).",
+  "flags": [
+    { "key": "disabled", "enabled": false, "variations": [false, true], "offVariation": 0, "fallthrough": { "variation": 1 }, "salt": "s" },
+    { "key": "target", "enabled": true, "variations": [false, true], "offVariation": 0, "targets": [{ "values": ["vip", "ceo"], "variation": 1 }], "fallthrough": { "variation": 0 }, "salt": "s" },
+    { "key": "rule-in", "enabled": true, "variations": ["off", "on"], "offVariation": 0, "rules": [{ "clauses": [{ "attribute": "country", "op": "in", "values": ["US", "CA"] }], "variation": 1 }], "fallthrough": { "variation": 0 }, "salt": "s" },
+    { "key": "rule-gt", "enabled": true, "variations": [false, true], "offVariation": 0, "rules": [{ "clauses": [{ "attribute": "age", "op": "greaterThan", "values": [18] }], "variation": 1 }], "fallthrough": { "variation": 0 }, "salt": "s" },
+    { "key": "rule-lt", "enabled": true, "variations": [false, true], "offVariation": 0, "rules": [{ "clauses": [{ "attribute": "score", "op": "lessThan", "values": [50] }], "variation": 1 }], "fallthrough": { "variation": 0 }, "salt": "s" },
+    { "key": "rule-contains", "enabled": true, "variations": [false, true], "offVariation": 0, "rules": [{ "clauses": [{ "attribute": "email", "op": "contains", "values": ["@corp.com"] }], "variation": 1 }], "fallthrough": { "variation": 0 }, "salt": "s" },
+    { "key": "rule-starts", "enabled": true, "variations": [false, true], "offVariation": 0, "rules": [{ "clauses": [{ "attribute": "path", "op": "startsWith", "values": ["/api"] }], "variation": 1 }], "fallthrough": { "variation": 0 }, "salt": "s" },
+    { "key": "rule-ends", "enabled": true, "variations": [false, true], "offVariation": 0, "rules": [{ "clauses": [{ "attribute": "host", "op": "endsWith", "values": [".internal"] }], "variation": 1 }], "fallthrough": { "variation": 0 }, "salt": "s" },
+    { "key": "rule-negate", "enabled": true, "variations": [false, true], "offVariation": 0, "rules": [{ "clauses": [{ "attribute": "country", "op": "in", "values": ["US"], "negate": true }], "variation": 1 }], "fallthrough": { "variation": 0 }, "salt": "s" },
+    { "key": "rule-multi", "enabled": true, "variations": [false, true], "offVariation": 0, "rules": [{ "clauses": [{ "attribute": "country", "op": "in", "values": ["US"] }, { "attribute": "age", "op": "greaterThan", "values": [21] }], "variation": 1 }], "fallthrough": { "variation": 0 }, "salt": "s" },
+    { "key": "rollout", "enabled": true, "variations": [false, true], "offVariation": 0, "fallthrough": { "rollout": [{ "variation": 0, "weight": 50000 }, { "variation": 1, "weight": 50000 }] }, "salt": "s" },
+    { "key": "gate", "enabled": true, "variations": [false, true], "offVariation": 0, "fallthrough": { "variation": 0 }, "salt": "s" },
+    { "key": "prereq", "enabled": true, "variations": [false, true], "offVariation": 0, "prerequisites": [{ "key": "gate", "variation": 1 }], "fallthrough": { "variation": 1 }, "salt": "s" }
+  ],
+  "cases": [
+    { "id": "disabled", "flag": "disabled", "context": { "key": "u" }, "expect": { "variationIndex": 0, "reason": "OFF", "value": false } },
+    { "id": "target-hit", "flag": "target", "context": { "key": "vip" }, "expect": { "variationIndex": 1, "reason": "TARGET_MATCH", "value": true } },
+    { "id": "target-miss", "flag": "target", "context": { "key": "nobody" }, "expect": { "variationIndex": 0, "reason": "FALLTHROUGH", "value": false } },
+    { "id": "in-hit", "flag": "rule-in", "context": { "key": "u", "attributes": { "country": "US" } }, "expect": { "variationIndex": 1, "reason": "RULE_MATCH", "value": "on" } },
+    { "id": "in-miss", "flag": "rule-in", "context": { "key": "u", "attributes": { "country": "IN" } }, "expect": { "variationIndex": 0, "reason": "FALLTHROUGH", "value": "off" } },
+    { "id": "gt-hit", "flag": "rule-gt", "context": { "key": "u", "attributes": { "age": 21 } }, "expect": { "variationIndex": 1, "reason": "RULE_MATCH", "value": true } },
+    { "id": "gt-miss", "flag": "rule-gt", "context": { "key": "u", "attributes": { "age": 15 } }, "expect": { "variationIndex": 0, "reason": "FALLTHROUGH", "value": false } },
+    { "id": "lt-hit", "flag": "rule-lt", "context": { "key": "u", "attributes": { "score": 30 } }, "expect": { "variationIndex": 1, "reason": "RULE_MATCH", "value": true } },
+    { "id": "lt-miss", "flag": "rule-lt", "context": { "key": "u", "attributes": { "score": 80 } }, "expect": { "variationIndex": 0, "reason": "FALLTHROUGH", "value": false } },
+    { "id": "contains-hit", "flag": "rule-contains", "context": { "key": "u", "attributes": { "email": "a@corp.com" } }, "expect": { "variationIndex": 1, "reason": "RULE_MATCH", "value": true } },
+    { "id": "contains-miss", "flag": "rule-contains", "context": { "key": "u", "attributes": { "email": "a@gmail.com" } }, "expect": { "variationIndex": 0, "reason": "FALLTHROUGH", "value": false } },
+    { "id": "starts-hit", "flag": "rule-starts", "context": { "key": "u", "attributes": { "path": "/api/users" } }, "expect": { "variationIndex": 1, "reason": "RULE_MATCH", "value": true } },
+    { "id": "starts-miss", "flag": "rule-starts", "context": { "key": "u", "attributes": { "path": "/web" } }, "expect": { "variationIndex": 0, "reason": "FALLTHROUGH", "value": false } },
+    { "id": "ends-hit", "flag": "rule-ends", "context": { "key": "u", "attributes": { "host": "db.internal" } }, "expect": { "variationIndex": 1, "reason": "RULE_MATCH", "value": true } },
+    { "id": "ends-miss", "flag": "rule-ends", "context": { "key": "u", "attributes": { "host": "db.example.com" } }, "expect": { "variationIndex": 0, "reason": "FALLTHROUGH", "value": false } },
+    { "id": "negate-hit", "flag": "rule-negate", "context": { "key": "u", "attributes": { "country": "IN" } }, "expect": { "variationIndex": 1, "reason": "RULE_MATCH", "value": true } },
+    { "id": "negate-miss", "flag": "rule-negate", "context": { "key": "u", "attributes": { "country": "US" } }, "expect": { "variationIndex": 0, "reason": "FALLTHROUGH", "value": false } },
+    { "id": "multi-hit", "flag": "rule-multi", "context": { "key": "u", "attributes": { "country": "US", "age": 30 } }, "expect": { "variationIndex": 1, "reason": "RULE_MATCH", "value": true } },
+    { "id": "multi-miss", "flag": "rule-multi", "context": { "key": "u", "attributes": { "country": "US", "age": 20 } }, "expect": { "variationIndex": 0, "reason": "FALLTHROUGH", "value": false } },
+    { "id": "rollout-A", "flag": "rollout", "context": { "key": "user-A" }, "expect": { "variationIndex": 0, "reason": "FALLTHROUGH", "value": false } },
+    { "id": "rollout-C", "flag": "rollout", "context": { "key": "user-C" }, "expect": { "variationIndex": 1, "reason": "FALLTHROUGH", "value": true } },
+    { "id": "prereq-fail", "flag": "prereq", "context": { "key": "u" }, "expect": { "variationIndex": 0, "reason": "PREREQUISITE_FAILED", "value": false } }
+  ],
+  "buckets": [
+    { "flagKey": "f", "salt": "s", "contextKey": "user-A", "expected": 0.250274217889144 },
+    { "flagKey": "checkout-v2", "salt": "abc", "contextKey": "user-1", "expected": 0.5864417850195552 },
+    { "flagKey": "rollout", "salt": "s", "contextKey": "user-C", "expected": 0.5457655356360461 }
+  ]
+}
