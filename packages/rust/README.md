@@ -11,6 +11,13 @@
 ## Usage
 
 ```rust
-let sb = switchboard_sdk::connect(sdk_key).await?;
-let on = sb.get_bool("checkout-v2", &ctx, false);
+use serde_json::json;
+use switchboard_sdk::SwitchboardClient;
+
+// `snapshot` is the flag-config JSON string { "flags": [ ... ] }, e.g. from /api/flags
+let client = SwitchboardClient::from_json(snapshot);
+
+let ctx = json!({ "key": "user-42", "attributes": { "country": "US" } });
+let r = client.evaluate_detail("checkout-v2", &ctx);
+// r.value, r.variation_index, r.reason
 ```

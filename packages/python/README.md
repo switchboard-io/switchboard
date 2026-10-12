@@ -11,8 +11,13 @@
 ## Usage
 
 ```python
-from switchboard_sdk import connect
+from switchboard_sdk import SwitchboardClient
 
-sb = connect(sdk_key)
-on = sb.get_bool("checkout-v2", {"key": "user-42"}, default=False)
+# `snapshot` is the flag-config JSON {"flags": [ ... ]} (dict or string), e.g. from /api/flags
+client = SwitchboardClient.from_json(snapshot)
+
+ctx = {"key": "user-42", "attributes": {"country": "US"}}
+on = client.get_bool("checkout-v2", ctx, default=False)
+
+detail = client.evaluate_detail("checkout-v2", ctx)  # {"value", "variationIndex", "reason"}
 ```

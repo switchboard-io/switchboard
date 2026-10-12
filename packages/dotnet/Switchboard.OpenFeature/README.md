@@ -11,10 +11,13 @@
 ## Usage
 
 ```csharp
-using OpenFeature;
+using Switchboard.Evaluation;
 using Switchboard.OpenFeature;
+using System.Text.Json.Nodes;
 
-await Api.Instance.SetProviderAsync(new SwitchboardProvider(sdkKey));
-var client = Api.Instance.GetClient();
-bool on = await client.GetBooleanValueAsync("checkout-v2", false);
+// `snapshot` is the flag-config JSON { "flags": [ ... ] }, e.g. from the server's /api/flags
+var provider = SwitchboardProvider.FromJson(snapshot);
+
+var ctx = new EvalContext("user-42").Set("country", JsonValue.Create("US"));
+var (on, reason) = provider.ResolveBoolean("checkout-v2", ctx, def: false);
 ```

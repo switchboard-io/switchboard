@@ -16,9 +16,14 @@ Switchboard is a self-hosted, open feature-management platform: feature flags, t
 
 ```csharp
 using Switchboard;
+using Switchboard.Evaluation;
+using System.Text.Json.Nodes;
 
-var about = SwitchboardClient.About(); // placeholder API
-// Full API (coming soon):
-//   var sb = await Switchboard.ConnectAsync(sdkKey);
-//   bool on = sb.GetBool("checkout-v2", context, defaultValue: false);
+// `snapshot` is the flag-config JSON { "flags": [ ... ] }, e.g. from the server's /api/flags
+var client = SwitchboardClient.FromJson(snapshot);
+
+var ctx = new EvalContext("user-42").Set("country", JsonValue.Create("US"));
+bool on = client.GetBool("checkout-v2", ctx, defaultValue: false);
+
+EvalResult detail = client.EvaluateDetail("checkout-v2", ctx); // Value, VariationIndex, Reason
 ```

@@ -11,6 +11,13 @@
 ## Usage
 
 ```java
-var sb = Switchboard.connect(sdkKey);
-boolean on = sb.getBool("checkout-v2", Context.of("key", "user-42"), false);
+import io.github.switchboard.sdk.Switchboard;
+import java.util.Map;
+
+// `snapshot` is the flag-config JSON { "flags": [ ... ] }, e.g. from the server's /api/flags
+Switchboard.Client client = Switchboard.Client.fromJson(snapshot);
+
+Map<String, Object> ctx = Map.of("key", "user-42", "attributes", Map.of("country", "US"));
+Switchboard.Result r = client.evaluateDetail("checkout-v2", ctx);
+// r.value, r.variationIndex, r.reason
 ```

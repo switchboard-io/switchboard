@@ -13,6 +13,10 @@
 ```ruby
 require "switchboard/sdk"
 
-sb = Switchboard::Sdk.connect(sdk_key)
-on = sb.get_bool("checkout-v2", { key: "user-42" }, default: false)
+# `snapshot` is the flag-config { "flags" => [ ... ] } (hash or JSON string), e.g. from /api/flags
+client = Switchboard::Sdk::Client.from_json(snapshot)
+
+ctx = { "key" => "user-42", "attributes" => { "country" => "US" } }
+r = client.evaluate_detail("checkout-v2", ctx)
+# r["value"], r["variationIndex"], r["reason"]
 ```

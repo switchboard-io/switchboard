@@ -11,8 +11,14 @@
 ## Usage
 
 ```js
-import { connect } from "@switchboard/sdk";
+import { SwitchboardClient } from "@switchboard/sdk";
 
-const sb = await connect(sdkKey);
-const on = sb.getBool("checkout-v2", { key: "user-42" }, false);
+// `snapshot` is the flag-config JSON { "flags": [ ... ] }, e.g. from the server's /api/flags
+const client = SwitchboardClient.fromJson(snapshot);
+
+const ctx = { key: "user-42", attributes: { country: "US" } };
+const on = client.getBool("checkout-v2", ctx, false);
+
+// full detail: { value, variationIndex, reason }
+const detail = client.evaluateDetail("checkout-v2", ctx);
 ```

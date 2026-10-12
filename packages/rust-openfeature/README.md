@@ -2,15 +2,15 @@
 
 **OpenFeature provider for Switchboard (Rust)** — plug Switchboard into any [OpenFeature](https://openfeature.dev)-based application.
 
-> **Build from source.** This SDK is complete and conformance-tested; build it from the [monorepo](https://github.com/switchboard-io/switchboard).
+> **Early stub.** The Rust SDK is complete and conformance-tested, but this OpenFeature
+> adapter is still a stub. Use the [SDK](../rust) directly for now, or build from the
+> [monorepo](https://github.com/switchboard-io/switchboard).
 
 - Website: https://switchboard.co
 - Source: https://github.com/switchboard-io/switchboard
 - License: Apache-2.0
 
-## Usage
+## Status
 
-```rust
-let provider = switchboard_openfeature::SwitchboardProvider::new(sdk_key);
-open_feature::OpenFeature::singleton_mut().await.set_provider(provider).await;
-```
+A thin adapter binding the Switchboard Rust SDK to the `open-feature` crate is planned.
+Until then, evaluate flags with the SDK directly — see [`packages/rust`](../rust).

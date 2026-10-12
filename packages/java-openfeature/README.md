@@ -2,16 +2,16 @@
 
 **OpenFeature provider for Switchboard (Java)** — plug Switchboard into any [OpenFeature](https://openfeature.dev)-based application.
 
-> **Build from source.** This SDK is complete and conformance-tested; build it from the [monorepo](https://github.com/switchboard-io/switchboard).
+> **Early stub.** The Java SDK is complete and conformance-tested, but this OpenFeature
+> adapter is still a stub. Use the [SDK](../java) directly for now, or build from the
+> [monorepo](https://github.com/switchboard-io/switchboard).
 
 - Website: https://switchboard.co
 - Source: https://github.com/switchboard-io/switchboard
 - License: Apache-2.0
 
-## Usage
+## Status
 
-```java
-OpenFeatureAPI.getInstance().setProvider(new SwitchboardProvider(sdkKey));
-var client = OpenFeatureAPI.getInstance().getClient();
-boolean on = client.getBooleanValue("checkout-v2", false);
-```
+A thin adapter binding the Switchboard Java SDK to OpenFeature's `FeatureProvider`
+interface is planned. Until then, evaluate flags with the SDK directly — see
+[`packages/java`](../java).

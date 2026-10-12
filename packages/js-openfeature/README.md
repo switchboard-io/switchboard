@@ -11,10 +11,12 @@
 ## Usage
 
 ```js
-import { OpenFeature } from "@openfeature/server-sdk";
+import { SwitchboardClient } from "@switchboard/sdk";
 import { SwitchboardProvider } from "@switchboard/openfeature-provider";
 
-await OpenFeature.setProviderAndWait(new SwitchboardProvider(sdkKey));
-const client = OpenFeature.getClient();
-const on = await client.getBooleanValue("checkout-v2", false);
+const client = SwitchboardClient.fromJson(snapshot);
+const provider = new SwitchboardProvider(client);
+
+const ctx = { key: "user-42", attributes: { country: "US" } };
+const { value, reason } = provider.resolveBooleanEvaluation("checkout-v2", false, ctx);
 ```

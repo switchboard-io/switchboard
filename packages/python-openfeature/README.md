@@ -11,10 +11,12 @@
 ## Usage
 
 ```python
-from openfeature import api
+from switchboard_sdk import SwitchboardClient
 from switchboard_openfeature_provider import SwitchboardProvider
 
-api.set_provider(SwitchboardProvider(sdk_key))
-client = api.get_client()
-on = client.get_boolean_value("checkout-v2", False)
+client = SwitchboardClient.from_json(snapshot)
+provider = SwitchboardProvider(client)
+
+ctx = {"key": "user-42", "attributes": {"country": "US"}}
+result = provider.resolve_boolean_details("checkout-v2", False, ctx)  # {"value", "reason"}
 ```

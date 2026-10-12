@@ -13,6 +13,10 @@
 ```go
 import switchboard "github.com/switchboard-io/switchboard-go"
 
-sb, _ := switchboard.Connect(sdkKey)
-on := sb.GetBool("checkout-v2", switchboard.Context{"key": "user-42"}, false)
+// `snapshot` is the flag-config JSON { "flags": [ ... ] }, e.g. from the server's /api/flags
+client := switchboard.FromJSON(snapshot)
+
+ctx := map[string]interface{}{"key": "user-42", "attributes": map[string]interface{}{"country": "US"}}
+r := client.EvaluateDetail("checkout-v2", ctx)
+// r.Value, r.VariationIndex, r.Reason
 ```
