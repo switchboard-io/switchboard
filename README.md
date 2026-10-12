@@ -51,8 +51,8 @@ unreachable.
 
 ## Install
 
-> **Status:** self-host from source today. Pre-built SDK packages (NuGet, npm, PyPI,
-> crates.io, Maven, Go modules) are on the way — follow the repo for the first release.
+> **Status:** self-host from source. Switchboard is designed to be run from this
+> repository — clone it and bring up the full platform with Docker.
 
 Run the whole platform locally with Docker:
 

@@ -2,7 +2,7 @@
 
 **The `switchboard` command-line tool** for [Switchboard](https://switchboard.co) feature management — create flags, toggle them, run progressive rollouts, evaluate contexts, and manage flag lifecycle from your terminal or CI.
 
-> **Not yet published.** The SDK is complete and conformance-tested — for now, build it from source from the [monorepo](https://github.com/switchboard-io/switchboard). Pre-built packages are coming.
+> **Build from source.** This SDK is complete and conformance-tested; build it from the [monorepo](https://github.com/switchboard-io/switchboard).
 
 - Website: https://switchboard.co
 - Source: https://github.com/switchboard-io/switchboard

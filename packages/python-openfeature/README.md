@@ -2,7 +2,7 @@
 
 **OpenFeature provider for Switchboard (Python)** — plug Switchboard into any [OpenFeature](https://openfeature.dev)-based application.
 
-> **Not yet published.** The SDK is complete and conformance-tested — for now, build it from source from the [monorepo](https://github.com/switchboard-io/switchboard). Pre-built packages are coming.
+> **Build from source.** This SDK is complete and conformance-tested; build it from the [monorepo](https://github.com/switchboard-io/switchboard).
 
 - Website: https://switchboard.co
 - Source: https://github.com/switchboard-io/switchboard
