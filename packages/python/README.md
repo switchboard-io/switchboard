@@ -8,13 +8,7 @@
 - Source: https://github.com/switchboard-io/switchboard
 - License: Apache-2.0
 
-## Install
-
-```bash
-pip install switchboard-sdk
-```
-
-## Planned usage
+## Usage
 
 ```python
 from switchboard_sdk import connect

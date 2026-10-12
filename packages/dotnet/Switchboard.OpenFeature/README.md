@@ -8,13 +8,7 @@
 - Source: https://github.com/switchboard-io/switchboard
 - License: Apache-2.0
 
-## Install
-
-```bash
-dotnet add package Switchboard.OpenFeature
-```
-
-## Planned usage
+## Usage
 
 ```csharp
 using OpenFeature;

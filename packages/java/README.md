@@ -8,17 +8,7 @@
 - Source: https://github.com/switchboard-io/switchboard
 - License: Apache-2.0
 
-## Install (Maven)
-
-```xml
-<dependency>
-  <groupId>io.github.switchboard-io</groupId>
-  <artifactId>sdk</artifactId>
-  <version>0.0.1</version>
-</dependency>
-```
-
-## Planned usage
+## Usage
 
 ```java
 var sb = Switchboard.connect(sdkKey);

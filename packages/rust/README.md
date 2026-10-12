@@ -8,13 +8,7 @@
 - Source: https://github.com/switchboard-io/switchboard
 - License: Apache-2.0
 
-## Install
-
-```bash
-cargo add switchboard-sdk
-```
-
-## Planned usage
+## Usage
 
 ```rust
 let sb = switchboard_sdk::connect(sdk_key).await?;

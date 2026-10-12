@@ -8,13 +8,7 @@
 - Source: https://github.com/switchboard-io/switchboard
 - License: Apache-2.0
 
-## Install
-
-```bash
-cargo add switchboard-openfeature
-```
-
-## Planned usage
+## Usage
 
 ```rust
 let provider = switchboard_openfeature::SwitchboardProvider::new(sdk_key);

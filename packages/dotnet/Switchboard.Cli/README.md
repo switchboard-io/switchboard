@@ -8,20 +8,14 @@
 - Source: https://github.com/switchboard-io/switchboard
 - License: Apache-2.0
 
-## Install
+## Commands
+
+Built from source (`dotnet run --project packages/dotnet/Switchboard.Cli -- …`):
 
 ```bash
-dotnet tool install -g Switchboard.Cli
-switchboard --help
-```
+# Evaluate a flag against a context using the real engine
+switchboard eval checkout-v2 --config flags.json --context '{"key":"user-42","attributes":{"country":"US"}}'
 
-## Planned commands
-
-```bash
-switchboard login --url https://switchboard.mycorp.internal
-switchboard flag create checkout-v2 --type temporary
-switchboard flag rollout checkout-v2 --env production --percent 25
-switchboard eval checkout-v2 --context '{"key":"user-42","plan":"pro"}'
-switchboard export --project web > flags.yaml
-switchboard lifecycle stale --days 30
+# Print the deterministic rollout bucket in [0,1) for a key
+switchboard bucket checkout-v2 abc user-1
 ```

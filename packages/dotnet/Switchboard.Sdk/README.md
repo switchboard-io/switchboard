@@ -12,13 +12,7 @@ Switchboard is a self-hosted, open feature-management platform: feature flags, t
 - Source: https://github.com/switchboard-io/switchboard
 - License: Apache-2.0
 
-## Install
-
-```bash
-dotnet add package Switchboard.Sdk
-```
-
-## Planned usage
+## Usage
 
 ```csharp
 using Switchboard;

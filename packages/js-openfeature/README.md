@@ -8,13 +8,7 @@
 - Source: https://github.com/switchboard-io/switchboard
 - License: Apache-2.0
 
-## Install
-
-```bash
-npm install @switchboard/openfeature-provider @switchboard/sdk
-```
-
-## Planned usage
+## Usage
 
 ```js
 import { OpenFeature } from "@openfeature/server-sdk";

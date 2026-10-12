@@ -8,13 +8,7 @@
 - Source: https://github.com/switchboard-io/switchboard
 - License: Apache-2.0
 
-## Install
-
-```bash
-go get github.com/switchboard-io/switchboard-go
-```
-
-## Planned usage
+## Usage
 
 ```go
 import switchboard "github.com/switchboard-io/switchboard-go"

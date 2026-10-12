@@ -8,13 +8,7 @@
 - Source: https://github.com/switchboard-io/switchboard
 - License: Apache-2.0
 
-## Install
-
-```bash
-npm install @switchboard/sdk
-```
-
-## Planned usage
+## Usage
 
 ```js
 import { connect } from "@switchboard/sdk";

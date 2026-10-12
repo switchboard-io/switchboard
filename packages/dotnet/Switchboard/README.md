@@ -7,9 +7,3 @@
 - Website: https://switchboard.co
 - Source: https://github.com/switchboard-io/switchboard
 - License: Apache-2.0
-
-## Install
-
-```bash
-dotnet add package Switchboard
-```
