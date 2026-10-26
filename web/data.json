@@ -1,5 +1,5 @@
 {
-  "generated": "2026-10-19",
+  "generated": "2026-10-26",
   "conformance": {
     "total": 175,
     "passing": 175,
@@ -18,29 +18,29 @@
   },
   "benchmarks": [
     {
-      "lang": "Node",
-      "nsPerEval": 972.9,
-      "throughput": 1027860
+      "lang": ".NET",
+      "nsPerEval": 625.1,
+      "throughput": 1599743
     },
     {
-      "lang": ".NET",
-      "nsPerEval": 1104.1,
-      "throughput": 905751
+      "lang": "Node",
+      "nsPerEval": 798.4,
+      "throughput": 1252487
     },
     {
       "lang": "Rust",
-      "nsPerEval": 2269.4,
-      "throughput": 440643
+      "nsPerEval": 1282.6,
+      "throughput": 779668
     },
     {
       "lang": "Go",
-      "nsPerEval": 2696.7,
-      "throughput": 370827
+      "nsPerEval": 1464.5,
+      "throughput": 682825
     },
     {
       "lang": "Python",
-      "nsPerEval": 2909.2,
-      "throughput": 343734
+      "nsPerEval": 5441.5,
+      "throughput": 183772
     }
   ],
   "buckets": [
