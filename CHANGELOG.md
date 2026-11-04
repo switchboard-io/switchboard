@@ -7,6 +7,12 @@ All notable changes to this project are documented here. The format is based on
 ## [Unreleased]
 
 ### Changed
+- Toolchain refresh: CI now builds and tests on Node.js 26 (Active LTS), Python 3.15,
+  Go 1.27, JDK 25 (LTS), Ruby 4.0 and Rust stable, with the .NET 10 SDK pinned via
+  `global.json`. All GitHub Actions moved to their current major versions.
+- Raised minimum supported runtimes to currently supported releases: Node.js >= 22,
+  Python >= 3.11, Go 1.26 (`go.mod`), Ruby >= 3.3, Rust 1.85 (crates moved to
+  edition 2024). Java keeps `release 11`; .NET libraries keep `netstandard2.0`.
 - Upgraded all .NET projects (engine, SDK, OpenFeature provider, CLI, server, tests,
   benchmark) to **.NET 10**; libraries continue to multi-target `netstandard2.0` for
   broad consumer reach. Docker images and CI updated to the .NET 10 SDK/runtime.

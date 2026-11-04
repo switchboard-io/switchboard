@@ -21,8 +21,8 @@ jobs:
     if: ${{ inputs.target == 'nuget' }}
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-dotnet@v4
+      - uses: actions/checkout@v7
+      - uses: actions/setup-dotnet@v6
         with: { dotnet-version: "10.0.x" }
       - run: dotnet pack -c Release -o out
       - run: dotnet nuget push "out/*.nupkg" --api-key "${{ secrets.NUGET_API_KEY }}" --source https://api.nuget.org/v3/index.json --skip-duplicate
@@ -38,9 +38,9 @@ jobs:
       run:
         working-directory: packages/${{ matrix.pkg }}
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-        with: { node-version: "20", registry-url: "https://registry.npmjs.org" }
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with: { node-version: "26", registry-url: "https://registry.npmjs.org" }
       - run: npm publish --provenance --access public || npm view "$(node -p "require('./package.json').name")@$(node -p "require('./package.json').version")" version
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
@@ -53,9 +53,9 @@ jobs:
       matrix:
         pkg: [python, python-openfeature]
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
-        with: { python-version: "3.12" }
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v7
+        with: { python-version: "3.15" }
       - run: pip install build
       - run: python -m build
         working-directory: packages/${{ matrix.pkg }}
@@ -72,7 +72,7 @@ jobs:
       matrix:
         pkg: [rust, rust-openfeature]
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - uses: dtolnay/rust-toolchain@stable
       - run: cargo publish --manifest-path packages/${{ matrix.pkg }}/Cargo.toml --token "${{ secrets.CARGO_REGISTRY_TOKEN }}" --allow-dirty || true
 
@@ -88,9 +88,9 @@ jobs:
       run:
         working-directory: packages/${{ matrix.dir }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - uses: ruby/setup-ruby@v1
-        with: { ruby-version: "3.2" }
+        with: { ruby-version: "4.0" }
       - env:
           GEM_HOST_API_KEY: ${{ secrets.RUBYGEMS_API_KEY }}
         run: |
@@ -107,11 +107,11 @@ jobs:
       run:
         working-directory: packages/${{ matrix.pkg }}
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-java@v4
+      - uses: actions/checkout@v7
+      - uses: actions/setup-java@v6
         with:
           distribution: temurin
-          java-version: "17"
+          java-version: "25"
           server-id: central
           server-username: MAVEN_USERNAME
           server-password: MAVEN_PASSWORD
@@ -128,9 +128,9 @@ jobs:
     runs-on: ubuntu-latest
     permissions: { contents: write }
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-go@v5
-        with: { go-version: "1.22" }
+      - uses: actions/checkout@v7
+      - uses: actions/setup-go@v7
+        with: { go-version: "1.27" }
       - working-directory: packages/go
         run: go build ./...
       - run: echo "Go publishes by tag (go-v*); proxy.golang.org indexes on first fetch."

@@ -22,7 +22,7 @@ services:
 
   # --- Production backing services (not yet wired; here as the documented target) ---
   # postgres:
-  #   image: postgres:16
+  #   image: postgres:18
   #   environment:
   #     POSTGRES_USER: switchboard
   #     POSTGRES_PASSWORD: switchboard
@@ -30,7 +30,7 @@ services:
   #   volumes: [ "pgdata:/var/lib/postgresql/data" ]
   #
   # redis:
-  #   image: redis:7
+  #   image: redis:8
   #
 # volumes:
 #   pgdata:

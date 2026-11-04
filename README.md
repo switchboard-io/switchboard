@@ -66,6 +66,18 @@ docker compose up --build
 Or build an SDK from source and reference it in your app — see the per-language
 projects under [`packages/`](packages/).
 
+### Supported runtimes
+
+| Language | Minimum supported | CI / development toolchain |
+|----------|-------------------|----------------------------|
+| .NET     | .NET 10 (`net10.0`); libraries also target `netstandard2.0` | .NET 10 SDK (`global.json`) |
+| Node.js  | 22                | 26 (Active LTS, `.nvmrc`)  |
+| Python   | 3.11              | 3.15                       |
+| Go       | 1.26              | 1.27                       |
+| Java     | 11 (`maven.compiler.release`) | JDK 25 (LTS)   |
+| Rust     | 1.85 (edition 2024) | stable                   |
+| Ruby     | 3.3               | 4.0                        |
+
 ## Quickstart (SDK API)
 
 The same API shape in every language:

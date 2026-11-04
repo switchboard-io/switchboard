@@ -7,7 +7,7 @@ Gem::Specification.new do |spec|
                        "Placeholder release reserving the gem name while the full provider is built."
   spec.homepage      = "https://switchboard.co"
   spec.license       = "Apache-2.0"
-  spec.required_ruby_version = ">= 3.0"
+  spec.required_ruby_version = ">= 3.3"
 
   spec.metadata = {
     "source_code_uri" => "https://github.com/switchboard-io/switchboard",

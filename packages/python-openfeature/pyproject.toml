@@ -7,7 +7,7 @@ name = "switchboard-openfeature-provider"
 version = "0.0.1"
 description = "OpenFeature provider for Switchboard feature management (Python). Placeholder release reserving the package name."
 readme = "README.md"
-requires-python = ">=3.8"
+requires-python = ">=3.11"
 license = "Apache-2.0"
 authors = [{ name = "Switchboard" }]
 keywords = ["feature-flags", "openfeature", "openfeature-provider", "feature-management", "switchboard"]

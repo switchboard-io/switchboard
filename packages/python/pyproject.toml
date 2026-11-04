@@ -7,7 +7,7 @@ name = "switchboard-sdk"
 version = "0.0.1"
 description = "Local-evaluation feature-flag SDK for Python. Real-time, offline-capable, OpenFeature-compatible. Placeholder release reserving the package name."
 readme = "README.md"
-requires-python = ">=3.8"
+requires-python = ">=3.11"
 license = "Apache-2.0"
 authors = [{ name = "Switchboard" }]
 keywords = ["feature-flags", "feature-management", "openfeature", "experimentation", "toggles", "rollout"]
