@@ -1,27 +1,27 @@
 [
   {
     "lang": "Node",
-    "nsPerEval": 822.7,
-    "throughput": 1215459
+    "nsPerEval": 521.5,
+    "throughput": 1917532
   },
   {
     "lang": ".NET",
-    "nsPerEval": 949.3,
-    "throughput": 1053458
+    "nsPerEval": 657.4,
+    "throughput": 1521060
   },
   {
     "lang": "Rust",
-    "nsPerEval": 1258.4,
-    "throughput": 794645
+    "nsPerEval": 1785.1,
+    "throughput": 560182
   },
   {
     "lang": "Go",
-    "nsPerEval": 1944.9,
-    "throughput": 514155
+    "nsPerEval": 2000.1,
+    "throughput": 499969
   },
   {
     "lang": "Python",
-    "nsPerEval": 3911.6,
-    "throughput": 255652
+    "nsPerEval": 3847.0,
+    "throughput": 259941
   }
 ]
