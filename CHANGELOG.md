@@ -13,6 +13,9 @@ All notable changes to this project are documented here. The format is based on
 - Raised minimum supported runtimes to currently supported releases: Node.js >= 22,
   Python >= 3.11, Go 1.26 (`go.mod`), Ruby >= 3.3, Rust 1.85 (crates moved to
   edition 2024). Java keeps `release 11`; .NET libraries keep `netstandard2.0`.
+- Dependency refresh: xUnit v2 -> xUnit.net v3 4.0 (`xunit.v3.mtp-off`, keeping the
+  VSTest `dotnet test` flow), Microsoft.NET.Test.Sdk 18.11, xunit.runner.visualstudio 4.0,
+  System.Text.Json 10.0.14 (netstandard2.0 build), Rust `sha1` 0.11.
 - Upgraded all .NET projects (engine, SDK, OpenFeature provider, CLI, server, tests,
   benchmark) to **.NET 10**; libraries continue to multi-target `netstandard2.0` for
   broad consumer reach. Docker images and CI updated to the .NET 10 SDK/runtime.
