@@ -10,6 +10,8 @@ All notable changes to this project are documented here. The format is based on
 - Toolchain refresh: CI now builds and tests on Node.js 26 (Active LTS), Python 3.15,
   Go 1.27, JDK 25 (LTS), Ruby 4.0 and Rust stable, with the .NET 10 SDK pinned via
   `global.json`. All GitHub Actions moved to their current major versions.
+- CI now builds the all-in-one server Docker image (build only, never pushed), smoke-tests
+  the running container, and validates/builds `docker-compose.yml` on every push and PR.
 - Raised minimum supported runtimes to currently supported releases: Node.js >= 22,
   Python >= 3.11, Go 1.26 (`go.mod`), Ruby >= 3.3, Rust 1.85 (crates moved to
   edition 2024). Java keeps `release 11`; .NET libraries keep `netstandard2.0`.

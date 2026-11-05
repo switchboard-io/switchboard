@@ -80,3 +80,37 @@ jobs:
       - uses: actions/setup-python@v7
         with: { python-version: "3.15" }
       - run: python scripts/check_versions.py
+
+  docker:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: docker/setup-buildx-action@v4
+      - name: Build server image (no push)
+        uses: docker/build-push-action@v7
+        with:
+          context: .
+          file: packages/dotnet/Switchboard.Server/Dockerfile
+          push: false
+          load: true
+          tags: switchboard/all-in-one:ci
+      - name: Smoke-test the container
+        run: |
+          docker run -d --name sb -p 8080:8080 switchboard/all-in-one:ci
+          for i in $(seq 1 30); do
+            curl -fsS http://localhost:8080/api/health && break
+            sleep 1
+          done
+          curl -fsS http://localhost:8080/api/health | grep -q '"status":"ok"'
+          curl -fsS -o /dev/null http://localhost:8080/
+          curl -fsS -X POST http://localhost:8080/api/eval/welcome-banner \
+            -H 'Content-Type: application/json' \
+            -d '{"key":"u1","attributes":{"country":"US"}}' | tee eval.json
+          grep -q '"reason":"RULE_MATCH"' eval.json
+      - name: Container logs
+        if: always()
+        run: docker logs sb || true
+      - name: Validate and build docker-compose.yml
+        run: |
+          docker compose config --quiet
+          docker compose build
